@@ -1,0 +1,325 @@
+---
+layout: base.njk
+title: Infinite Potential
+---
+
+{# Hero / Scrollytelling Video Experience #}
+<section id="scrolly-experience" class="relative bg-black" style="height: 600vh;">
+
+  {# Skip link for accessibility — lets keyboard users jump past the experience #}
+  <a href="#features" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-neutral focus:px-3 focus:py-2 focus:rounded">Skip the video experience</a>
+
+  {# Sticky stage that pins for the duration of the section #}
+  <div class="sticky top-0 h-screen w-full overflow-hidden">
+
+    {# ScrollyVideo will inject its <video> element into this container #}
+    <div id="scrolly-video" class="absolute inset-0 w-full h-full"></div>
+
+    {# Subtle full-stage veil to keep scrolling text legible over any frame #}
+    <div class="absolute inset-0 bg-black/20 z-10 pointer-events-none"></div>
+
+    {# Sticky overlay: title, progress dots, scroll hint (captions live OUTSIDE this stage now so they can scroll) #}
+    <div class="absolute inset-0 z-20 pointer-events-none">
+
+      {# Top section title #}
+      <div class="absolute top-6 lg:top-8 inset-x-0 text-center px-4">
+        <p class="text-white/80 text-xs lg:text-sm font-bold uppercase tracking-widest font-[family-name:var(--font-display)]">Watch &amp; Reflect</p>
+      </div>
+
+      {# Progress dots — one per caption scene #}
+      <div class="absolute right-6 lg:right-12 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20">
+        <div class="scrolly-dot w-2 h-2 rounded-full" style="transition: background-color 0.4s ease, transform 0.4s ease; background-color: #28dafc; transform: scale(1.5);"></div>
+        <div class="scrolly-dot w-2 h-2 rounded-full" style="transition: background-color 0.4s ease, transform 0.4s ease; background-color: rgba(255,255,255,0.3);"></div>
+        <div class="scrolly-dot w-2 h-2 rounded-full" style="transition: background-color 0.4s ease, transform 0.4s ease; background-color: rgba(255,255,255,0.3);"></div>
+        <div class="scrolly-dot w-2 h-2 rounded-full" style="transition: background-color 0.4s ease, transform 0.4s ease; background-color: rgba(255,255,255,0.3);"></div>
+        <div class="scrolly-dot w-2 h-2 rounded-full" style="transition: background-color 0.4s ease, transform 0.4s ease; background-color: rgba(255,255,255,0.3);"></div>
+        <div class="scrolly-dot w-2 h-2 rounded-full" style="transition: background-color 0.4s ease, transform 0.4s ease; background-color: rgba(255,255,255,0.3);"></div>
+      </div>
+
+      {# Subtle scroll hint, fades out after the user starts scrolling #}
+      <div class="scrolly-hint absolute bottom-3 left-1/2 -translate-x-1/2 text-white/50 text-[10px] lg:text-xs uppercase tracking-[0.3em]" style="transition: opacity 0.4s ease;">↓ Scroll</div>
+
+    </div>
+  </div>
+
+  {# Scrolling caption track — overlaps the sticky stage via negative margin so each caption rises up the page #}
+  <div class="relative z-30 pointer-events-none" style="margin-top: -100vh;">
+    <div class="scrolly-step h-screen flex items-center justify-center px-6 lg:px-12" data-step="0">
+      <p class="scrolly-caption max-w-3xl mx-auto text-white text-lg lg:text-2xl leading-relaxed text-center" style="transition: opacity 0.5s ease;">In October of 1946, the first photographs were taken from space. They were new and strange and wonderful, and every year after that, the images kept getting better.</p>
+    </div>
+    <div class="scrolly-step h-screen flex items-center justify-center px-6 lg:px-12" data-step="1">
+      <p class="scrolly-caption max-w-3xl mx-auto text-white text-lg lg:text-2xl leading-relaxed text-center" style="transition: opacity 0.5s ease;">We witnessed beauty and power, delight and grace. We discovered amazing things that we didn't even know we were looking for.</p>
+    </div>
+    <div class="scrolly-step h-screen flex items-center justify-center px-6 lg:px-12" data-step="2">
+      <p class="scrolly-caption max-w-3xl mx-auto text-white text-lg lg:text-2xl leading-relaxed text-center" style="transition: opacity 0.5s ease;">Things that have been right there all along, just waiting to be found. And just like the night sky, there's so much more of us that's yet to be discovered.</p>
+    </div>
+    <div class="scrolly-step h-screen flex items-center justify-center px-6 lg:px-12" data-step="3">
+      <p class="scrolly-caption max-w-3xl mx-auto text-white text-lg lg:text-2xl leading-relaxed text-center" style="transition: opacity 0.5s ease;">Endless amounts of strength and courage, and passion. All these things that we need, they're already inside of us.</p>
+    </div>
+    <div class="scrolly-step h-screen flex items-center justify-center px-6 lg:px-12" data-step="4">
+      <p class="scrolly-caption max-w-3xl mx-auto text-white text-lg lg:text-2xl leading-relaxed text-center" style="transition: opacity 0.5s ease;">If we can take the time to look deep within, we'll discover an infinite amount of potential.<br>Just waiting to be realized.</p>
+    </div>
+    <div class="scrolly-step h-screen flex items-center justify-center px-6 lg:px-12" data-step="5">
+      <p class="scrolly-caption max-w-3xl mx-auto text-white text-lg lg:text-2xl leading-relaxed text-center" style="transition: opacity 0.5s ease;">[Scene 6 — replace with transcript excerpt for ~1:05–1:18]</p>
+    </div>
+  </div>
+</section>
+
+{# Make sure the <video> ScrollyVideo creates fills the stage, and give captions a readable text-shadow #}
+<style>
+  #scrolly-video video,
+  #scrolly-video canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #scrolly-experience .scrolly-caption {
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.6);
+  }
+</style>
+
+{# ScrollyVideo.js library + init #}
+<script src="https://cdn.jsdelivr.net/npm/scrolly-video@latest/dist/scrolly-video.js"></script>
+<script>
+(function () {
+  var section = document.getElementById('scrolly-experience');
+  if (!section || typeof ScrollyVideo === 'undefined') return;
+
+  var steps = section.querySelectorAll('.scrolly-step');
+  var captions = section.querySelectorAll('.scrolly-caption');
+  var dots = section.querySelectorAll('.scrolly-dot');
+  var hint = section.querySelector('.scrolly-hint');
+  var total = steps.length;
+  var currentIdx = -1;
+
+  // Initialize ScrollyVideo with manual control — we drive it from our own scroll handler
+  // so the layout (sticky stage + scrolling caption track) stays under our control.
+  var sv = new ScrollyVideo({
+    scrollyVideoContainer: 'scrolly-video',
+    src: '{{ "/videos/scrolly.mp4" | url }}',
+    sticky: false,
+    full: false,
+    trackScroll: false,
+    cover: true
+  });
+
+  function update() {
+    var rect = section.getBoundingClientRect();
+    var scrollable = section.offsetHeight - window.innerHeight;
+    var pct = scrollable > 0 ? Math.min(1, Math.max(0, -rect.top / scrollable)) : 0;
+
+    // Drive the video scrub
+    if (sv && typeof sv.setVideoPercentage === 'function') {
+      sv.setVideoPercentage(pct);
+    }
+
+    // Fade scroll hint as soon as the user moves
+    if (hint) hint.style.opacity = pct < 0.03 ? '1' : '0';
+
+    // Active dot follows scroll segment; captions stay fully visible since they scroll naturally
+    var idx = Math.min(Math.floor(pct * total), total - 1);
+    if (idx === currentIdx) return;
+    currentIdx = idx;
+
+    dots.forEach(function (d, i) {
+      d.style.backgroundColor = i === idx ? '#28dafc' : 'rgba(255,255,255,0.3)';
+      d.style.transform = i === idx ? 'scale(1.5)' : 'scale(1)';
+    });
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+}());
+</script>
+
+{# Features Section #}
+<section id="features" class="py-16 lg:py-24">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <p class="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-display)] text-center mb-12 leading-snug">
+      We believe all humans and organizations have infinite potential. For those who desire to reach it, we enable them through coaching and culture design.
+    </p>
+    <div class="grid md:grid-cols-2 gap-8">
+
+      <div class="card bg-base-100 shadow-xl border border-base-300">
+        <div class="card-body">
+          <h3 class="card-title text-xl">For leaders.</h3>
+          <hr class="border-t border-base-300 my-3">
+          <p class="text-base-content/70">One-on-one coaching with CEOs and executives navigating complexity &mdash; expanding capacity from the inside out.</p>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-xl border border-base-300">
+        <div class="card-body">
+          <h3 class="card-title text-xl">For teams &amp; organizations</h3>
+          <hr class="border-t border-base-300 my-3">
+          <p class="text-base-content/70">Culture design work that co-creates the conditions where high performance emerges as a natural expression of shared values and trust.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{# Quote Section #}
+<section class="bg-gradient-to-br from-primary to-secondary text-white py-16 lg:py-24">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <blockquote>
+      <p class="text-2xl lg:text-4xl italic text-white/90 leading-relaxed">
+        &ldquo;We shall not cease from exploration<br>
+        And the end of all our exploring<br>
+        Will be to arrive where we started<br>
+        And know the place for the first time.&rdquo;
+      </p>
+      <cite class="block mt-4 text-sm text-white/60 not-italic">&mdash; T.S. Eliot</cite>
+    </blockquote>
+  </div>
+</section>
+
+{# 5-Step Process Section #}
+<section id="process-section" class="relative bg-black h-[600vh]">
+  <div class="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+
+    {# Section title #}
+    <div class="absolute top-8 lg:top-12 inset-x-0 text-center z-10 px-4">
+      <p class="text-white text-sm lg:text-base font-bold uppercase tracking-widest font-[family-name:var(--font-display)]">The Infinite Potential Transformation Process</p>
+    </div>
+
+    {# Progress dots #}
+    <div class="absolute right-6 lg:right-12 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20">
+      <div class="process-dot w-2 h-2 rounded-full" style="transition: background-color 0.4s ease, transform 0.4s ease; background-color: #28dafc;"></div>
+      <div class="process-dot w-2 h-2 rounded-full" style="transition: background-color 0.4s ease, transform 0.4s ease; background-color: rgba(255,255,255,0.3);"></div>
+      <div class="process-dot w-2 h-2 rounded-full" style="transition: background-color 0.4s ease, transform 0.4s ease; background-color: rgba(255,255,255,0.3);"></div>
+      <div class="process-dot w-2 h-2 rounded-full" style="transition: background-color 0.4s ease, transform 0.4s ease; background-color: rgba(255,255,255,0.3);"></div>
+      <div class="process-dot w-2 h-2 rounded-full" style="transition: background-color 0.4s ease, transform 0.4s ease; background-color: rgba(255,255,255,0.3);"></div>
+    </div>
+
+    {# Step 1 #}
+    <div class="process-step absolute inset-0 flex items-center justify-center" style="opacity: 1; transition: opacity 0.7s ease, transform 0.7s ease; transform: translateY(0);">
+      <div class="max-w-4xl w-full mx-auto px-8 lg:px-12">
+        <p class="text-accent text-sm font-bold uppercase tracking-widest mb-4">01</p>
+        <h3 class="text-4xl lg:text-6xl font-bold font-[family-name:var(--font-display)] text-white mb-8">Awareness</h3>
+        <p class="text-xl lg:text-2xl text-white/90 leading-relaxed max-w-2xl">Leaders see themselves and their patterns honestly. Hidden assumptions surface, emotional noise decreases, and the real work becomes nameable.</p>
+      </div>
+    </div>
+
+    {# Step 2 #}
+    <div class="process-step absolute inset-0 flex items-center justify-center" style="opacity: 0; transition: opacity 0.7s ease, transform 0.7s ease; transform: translateY(60px);">
+      <div class="max-w-4xl w-full mx-auto px-8 lg:px-12">
+        <p class="text-accent text-sm font-bold uppercase tracking-widest mb-4">02</p>
+        <h3 class="text-4xl lg:text-6xl font-bold font-[family-name:var(--font-display)] text-white mb-8">Alignment</h3>
+        <p class="text-xl lg:text-2xl text-white/90 leading-relaxed max-w-2xl">Personal truth becomes shared truth. Teams decide what matters most, in what order, and why. Reducing friction, duplication, and unspoken agendas.</p>
+      </div>
+    </div>
+
+    {# Step 3 #}
+    <div class="process-step absolute inset-0 flex items-center justify-center" style="opacity: 0; transition: opacity 0.7s ease, transform 0.7s ease; transform: translateY(60px);">
+      <div class="max-w-4xl w-full mx-auto px-8 lg:px-12">
+        <p class="text-accent text-sm font-bold uppercase tracking-widest mb-4">03</p>
+        <h3 class="text-4xl lg:text-6xl font-bold font-[family-name:var(--font-display)] text-white mb-8">Action</h3>
+        <p class="text-xl lg:text-2xl text-white/90 leading-relaxed max-w-2xl">Choices, language, and meeting structures shift. Strategy begins moving through new norms rather than old habits.</p>
+      </div>
+    </div>
+
+    {# Step 4 #}
+    <div class="process-step absolute inset-0 flex items-center justify-center" style="opacity: 0; transition: opacity 0.7s ease, transform 0.7s ease; transform: translateY(60px);">
+      <div class="max-w-4xl w-full mx-auto px-8 lg:px-12">
+        <p class="text-accent text-sm font-bold uppercase tracking-widest mb-4">04</p>
+        <h3 class="text-4xl lg:text-6xl font-bold font-[family-name:var(--font-display)] text-white mb-8">Acceleration</h3>
+        <p class="text-xl lg:text-2xl text-white/90 leading-relaxed max-w-2xl">Decision-making speeds up. Priorities become self-evident. Drag disappears. The organization begins to behave like the future version of itself.</p>
+      </div>
+    </div>
+
+    {# Step 5 #}
+    <div class="process-step absolute inset-0 flex items-center justify-center" style="opacity: 0; transition: opacity 0.7s ease, transform 0.7s ease; transform: translateY(60px);">
+      <div class="max-w-4xl w-full mx-auto px-8 lg:px-12">
+        <p class="text-accent text-sm font-bold uppercase tracking-widest mb-4">05</p>
+        <h3 class="text-4xl lg:text-6xl font-bold font-[family-name:var(--font-display)] text-white mb-8">Adoption</h3>
+        <p class="text-xl lg:text-2xl text-white/90 leading-relaxed max-w-2xl">The new leadership operating system sustains without external force. Behaviors, rituals, and language persist, reinforcing performance and protecting the investment.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function () {
+  var section = document.getElementById('process-section');
+  if (!section) return;
+  var steps = section.querySelectorAll('.process-step');
+  var dots = section.querySelectorAll('.process-dot');
+  var currentIndex = 0;
+
+  function update() {
+    var rect = section.getBoundingClientRect();
+    var scrollable = section.offsetHeight - window.innerHeight;
+    var progress = Math.min(1, Math.max(0, -rect.top / scrollable));
+    var active = Math.min(Math.floor(progress * steps.length), steps.length - 1);
+
+    if (active === currentIndex) return;
+    currentIndex = active;
+
+    steps.forEach(function (step, i) {
+      if (i === active) {
+        step.style.opacity = '1';
+        step.style.transform = 'translateY(0)';
+      } else if (i < active) {
+        step.style.opacity = '0';
+        step.style.transform = 'translateY(-60px)';
+      } else {
+        step.style.opacity = '0';
+        step.style.transform = 'translateY(60px)';
+      }
+    });
+
+    dots.forEach(function (dot, i) {
+      dot.style.backgroundColor = i === active ? '#28dafc' : 'rgba(255,255,255,0.3)';
+      dot.style.transform = i === active ? 'scale(1.5)' : 'scale(1)';
+    });
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+}());
+</script>
+
+{# Humans Before Spreadsheets Section #}
+<section class="py-16 lg:py-24">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] mb-6">Humans Before Spreadsheets</h2>
+    <p class="text-xl lg:text-2xl text-base-content/70">If the humans aren&rsquo;t aligned, the spreadsheets are lying.</p>
+  </div>
+</section>
+
+{# TypeForm Section (hidden for now)
+<section id="contact" class="py-16 lg:py-24 bg-base-200">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-center mb-12">Get in Touch</h2>
+    <div data-tf-live="01KME2W6SC1QWNV35E2S9JNPM0"></div>
+  </div>
+</section>
+#}
+
+{# Closing Section #}
+<section class="bg-black py-24 text-center">
+  <h2 class="text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] text-white mb-8">What will you reach for?</h2>
+  <img src="{{ '/images/IP-LOGOMARK-COLOR-RGB.png' | url }}" alt="{{ site.name }}" class="h-16 w-auto mx-auto">
+</section>
+
+{# About / CTA Section #}
+<section id="about" class="bg-gradient-to-br from-primary to-secondary text-white py-16 lg:py-24">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-4xl font-bold font-[family-name:var(--font-display)] mb-6">Join a Community of Leaders<br>Who Look Inward</h2>
+    <p class="text-lg mb-8 text-white/80 max-w-xl mx-auto">Every two weeks we share a piece of wisdom and a reflection prompt. It's a simple practice that compounds over time.<br />For leaders who know that change happens from the inside out.</p>
+    <form action="https://app.kit.com/forms/9252338/subscriptions" class="seva-form formkit-form" method="post" data-sv-form="9252338" data-uid="8630c1aad3" data-format="inline" data-version="5">
+      <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
+      <div data-element="fields" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <input class="input bg-white text-neutral flex-grow" name="email_address" aria-label="Email Address" placeholder="Email Address" required type="email">
+        <button data-element="submit" class="btn btn-accent text-white">
+          <div class="formkit-spinner"><div></div><div></div><div></div></div>
+          <span>Join the Community</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

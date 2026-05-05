@@ -1,0 +1,20 @@
+module.exports = function(eleventyConfig) {
+  // Pass through styles
+  eleventyConfig.addPassthroughCopy("src/styles");
+
+  // Pass through images
+  eleventyConfig.addPassthroughCopy("src/images");
+
+  // Pass through videos
+  eleventyConfig.addPassthroughCopy("src/videos");
+
+  return {
+    pathPrefix: process.env.ELEVENTY_PATH_PREFIX || "/",
+    dir: {
+      input: "src",
+      output: "_site",
+      includes: "_includes",
+      data: "_data"
+    }
+  };
+};

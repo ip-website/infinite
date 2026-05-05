@@ -1,0 +1,375 @@
+---
+layout: base.njk
+title: Infinite Potential
+---
+
+{# Hero Section #}
+<section class="relative min-h-screen bg-black flex flex-col items-center justify-start text-center px-4 pt-20 lg:pt-28 pb-24 overflow-hidden">
+  <canvas id="hero-stars" class="absolute inset-0 w-full h-full"></canvas>
+  <div class="max-w-4xl mx-auto relative z-10">
+    <h1 class="text-5xl lg:text-7xl font-bold font-[family-name:var(--font-display)] mb-16 leading-tight">
+      <span class="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">We believe you have<br /> infinite potential.</span>
+      <span id="hero-subtitle" class="text-white block mt-2" style="opacity: 0; transform: translateY(16px); transition: opacity 0.4s ease, transform 0.4s ease;">We help you unlock it.</span>
+    </h1>
+    <p id="hero-body" class="text-xl lg:text-2xl text-white/80 max-w-3xl mx-auto leading-relaxed" style="opacity: 0; transform: translateY(16px); transition: opacity 0.4s ease, transform 0.4s ease;">
+      Great leaders and teams EVOLVE.<br /><br />
+      Our approach helps them to close the gap between where they are and what they&rsquo;re truly capable of.
+    </p>
+  </div>
+</section>
+
+<script>
+(function () {
+  var canvas = document.getElementById('hero-stars');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W, H, stars = [], raf, t = 0;
+
+  function initStars() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+    stars = [];
+    // Layer 1: distant, slow parallax
+    for (var i = 0; i < 250; i++) {
+      stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 0.6 + 0.1,
+        base: Math.random() * 0.5 + 0.3, twinkle: Math.random() < 0.15,
+        speed: Math.random() * 0.03 + 0.02, phase: Math.random() * Math.PI * 2, parallax: 0.04, glow: false });
+    }
+    // Layer 2: mid
+    for (var j = 0; j < 80; j++) {
+      stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 0.9 + 0.3,
+        base: Math.random() * 0.4 + 0.4, twinkle: Math.random() < 0.25,
+        speed: Math.random() * 0.06 + 0.03, phase: Math.random() * Math.PI * 2, parallax: 0.14, glow: false });
+    }
+    // Layer 3: bright, fast parallax, glow
+    for (var k = 0; k < 20; k++) {
+      stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.2 + 0.8,
+        base: Math.random() * 0.3 + 0.7, twinkle: Math.random() < 0.45,
+        speed: Math.random() * 0.1 + 0.05, phase: Math.random() * Math.PI * 2, parallax: 0.28, glow: true });
+    }
+  }
+
+  function drawBg() {
+    var bg = ctx.createRadialGradient(W * 0.4, H * 0.35, 0, W * 0.5, H * 0.5, W * 0.9);
+    bg.addColorStop(0, '#0d0d2b'); bg.addColorStop(0.5, '#06061a'); bg.addColorStop(1, '#020208');
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+    var n1 = ctx.createRadialGradient(W * 0.65, H * 0.35, 0, W * 0.65, H * 0.35, W * 0.45);
+    n1.addColorStop(0, 'rgba(112,87,232,0.18)'); n1.addColorStop(0.6, 'rgba(71,143,249,0.07)'); n1.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = n1; ctx.fillRect(0, 0, W, H);
+    var n2 = ctx.createRadialGradient(W * 0.25, H * 0.65, 0, W * 0.25, H * 0.65, W * 0.35);
+    n2.addColorStop(0, 'rgba(40,218,252,0.1)'); n2.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = n2; ctx.fillRect(0, 0, W, H);
+  }
+
+  var subtitle = document.getElementById('hero-subtitle');
+  var heroBody = document.getElementById('hero-body');
+  var unlocked = false;
+  var effectiveScroll = 0;
+  var UNLOCK_AT = 500;
+  var allDone = false;
+
+  // Keep scrollbar visible but snap back to top while locked
+  document.documentElement.style.overflowY = 'scroll';
+  function snapToTop() { if (!unlocked) window.scrollTo(0, 0); }
+  window.addEventListener('scroll', snapToTop);
+
+  function doUnlock() {
+    if (unlocked) return;
+    unlocked = true;
+    allDone = true;
+    document.documentElement.style.overflowY = '';
+    window.removeEventListener('scroll', snapToTop);
+    if (subtitle) { subtitle.style.opacity = '1'; subtitle.style.transform = 'translateY(0)'; }
+    if (heroBody) { heroBody.style.opacity = '1'; heroBody.style.transform = 'translateY(0)'; }
+    window.removeEventListener('wheel', onWheel);
+    window.removeEventListener('keydown', onKeyDown);
+    window.removeEventListener('touchmove', onTouchMove);
+    window.removeEventListener('touchstart', onTouchStart);
+  }
+
+  function onWheel(e) {
+    if (unlocked) return;
+    e.preventDefault();
+    effectiveScroll = Math.min(UNLOCK_AT, effectiveScroll + Math.min(Math.abs(e.deltaY), 80));
+    if (effectiveScroll >= UNLOCK_AT) doUnlock();
+  }
+
+  var touchStartY = 0;
+  function onTouchStart(e) { touchStartY = e.touches[0].clientY; }
+  function onTouchMove(e) {
+    if (unlocked) return;
+    e.preventDefault();
+    var delta = touchStartY - e.touches[0].clientY;
+    touchStartY = e.touches[0].clientY;
+    effectiveScroll = Math.min(UNLOCK_AT, effectiveScroll + Math.max(0, delta));
+    if (effectiveScroll >= UNLOCK_AT) doUnlock();
+  }
+
+  function onKeyDown(e) {
+    if (unlocked) return;
+    if (['ArrowDown', ' ', 'PageDown'].indexOf(e.key) > -1) {
+      e.preventDefault();
+      effectiveScroll = Math.min(UNLOCK_AT, effectiveScroll + 80);
+      if (effectiveScroll >= UNLOCK_AT) doUnlock();
+    }
+  }
+
+  window.addEventListener('wheel', onWheel, { passive: false });
+  window.addEventListener('touchstart', onTouchStart, { passive: true });
+  window.addEventListener('touchmove', onTouchMove, { passive: false });
+  window.addEventListener('keydown', onKeyDown);
+
+  function updateSubtitle(s) {
+    if (!subtitle || allDone) return;
+    var p = Math.min(1, Math.max(0, (s - 40) / 220));
+    subtitle.style.opacity = p;
+    subtitle.style.transform = 'translateY(' + (16 - p * 16) + 'px)';
+  }
+
+  function updateHeroBody(s) {
+    if (!heroBody || allDone) return;
+    var p = Math.min(1, Math.max(0, (s - 280) / 200));
+    heroBody.style.opacity = p;
+    heroBody.style.transform = 'translateY(' + (16 - p * 16) + 'px)';
+  }
+
+  function animate() {
+    t++;
+    var scrollY = unlocked ? (window.scrollY || window.pageYOffset) : effectiveScroll;
+    updateSubtitle(scrollY);
+    updateHeroBody(scrollY);
+    ctx.clearRect(0, 0, W, H);
+    drawBg();
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      var sy = ((s.y - scrollY * s.parallax) % H + H) % H;
+      var op = s.twinkle ? Math.max(0.05, Math.min(1, s.base + Math.sin(t * s.speed + s.phase) * 0.35)) : s.base;
+      if (s.glow) {
+        var g = ctx.createRadialGradient(s.x, sy, 0, s.x, sy, s.r * 5);
+        g.addColorStop(0, 'rgba(255,255,255,' + op + ')');
+        g.addColorStop(0.4, 'rgba(200,220,255,' + (op * 0.25) + ')');
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(s.x - s.r * 5, sy - s.r * 5, s.r * 10, s.r * 10);
+      }
+      ctx.beginPath();
+      ctx.arc(s.x, sy, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,' + op + ')';
+      ctx.fill();
+    }
+    raf = requestAnimationFrame(animate);
+  }
+
+  function resize() { cancelAnimationFrame(raf); initStars(); animate(); }
+
+  initStars();
+  animate();
+  window.addEventListener('resize', resize);
+}());
+</script>
+
+{# Problem Section #}
+<section class="py-16 lg:py-24 bg-neutral">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-6">Humans before spreadsheets.</h2>
+    <p class="text-lg text-white/70 mb-4 max-w-3xl leading-relaxed">If the humans are not thriving, the organization will get stuck. <br /><br /><strong class="text-white">Our humans first approach creates paths that accelerate organizations to extraordinary, measurable, and sustainable results.</strong></p>
+    <p class="text-lg text-white/70 mb-12 max-w-3xl leading-relaxed">We start with your most important and urgent problems.</p>
+    <div class="grid md:grid-cols-2 gap-8">
+
+      <div class="card bg-primary text-white shadow-xl">
+        <div class="card-body">
+          <p class="text-xs font-bold uppercase tracking-widest text-white/60 mb-3">Human problems</p>
+          <div id="human-carousel" style="min-height: 100px; transition: opacity 0.35s ease;">
+            <h3 class="carousel-title card-title text-xl">Team Transitions</h3>
+            <hr class="border-white/20 my-3">
+            <p class="carousel-body text-white/80">CEO / Partner / Team Reorganizations and Transitions</p>
+          </div>
+          <div class="flex gap-2 mt-5">
+            <div class="human-dot w-1.5 h-1.5 rounded-full" style="transition: background-color 0.3s; background-color: white;"></div>
+            <div class="human-dot w-1.5 h-1.5 rounded-full" style="transition: background-color 0.3s; background-color: rgba(255,255,255,0.3);"></div>
+            <div class="human-dot w-1.5 h-1.5 rounded-full" style="transition: background-color 0.3s; background-color: rgba(255,255,255,0.3);"></div>
+            <div class="human-dot w-1.5 h-1.5 rounded-full" style="transition: background-color 0.3s; background-color: rgba(255,255,255,0.3);"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white/10 border border-white/20">
+        <div class="card-body">
+          <p class="text-xs font-bold uppercase tracking-widest text-white/50 mb-3">Spreadsheet problems</p>
+          <div id="sheet-carousel" style="min-height: 100px; transition: opacity 0.35s ease;">
+            <h3 class="carousel-title card-title text-xl text-white">Revenue + Profit Growth</h3>
+            <hr class="border-white/20 my-3">
+            <p class="carousel-body text-white/80">Driving Culture for Material and Measurable Growth</p>
+          </div>
+          <div class="flex gap-2 mt-5">
+            <div class="sheet-dot w-1.5 h-1.5 rounded-full" style="transition: background-color 0.3s; background-color: white;"></div>
+            <div class="sheet-dot w-1.5 h-1.5 rounded-full" style="transition: background-color 0.3s; background-color: rgba(255,255,255,0.3);"></div>
+            <div class="sheet-dot w-1.5 h-1.5 rounded-full" style="transition: background-color 0.3s; background-color: rgba(255,255,255,0.3);"></div>
+            <div class="sheet-dot w-1.5 h-1.5 rounded-full" style="transition: background-color 0.3s; background-color: rgba(255,255,255,0.3);"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var humanSlides = [
+    { title: 'Team Transitions', body: 'CEO / Partner / Team Reorganizations and Transitions' },
+    { title: 'Team & Workflow Misalignment', body: 'Support deep connection + clarity to meet objectives' },
+    { title: 'Executive Growth & Transformation', body: 'One-on-one coaching for CEOs, Executives, Pro Coaches' },
+    { title: 'Goals and Priorities', body: 'Personal and organizational goal / priority alignment' }
+  ];
+  var sheetSlides = [
+    { title: 'Revenue + Profit Growth', body: 'Driving Culture for Material and Measurable Growth' },
+    { title: 'Measurable Operational Improvement', body: 'Vision + Values Check In, Buy In, Live In to improve KPIs' },
+    { title: 'Financial Planning & Forecasting', body: 'Budgets, Forecasts, Capital Structure, Raising Capital' },
+    { title: 'Business Exits', body: 'Positioning + Guiding Owners on Sale of Business' }
+  ];
+
+  function initCarousel(id, dotClass, slides, activeDot, inactiveDot) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var title = el.querySelector('.carousel-title');
+    var body = el.querySelector('.carousel-body');
+    var dots = document.querySelectorAll('.' + dotClass);
+    var idx = 0;
+
+    setInterval(function () {
+      el.style.opacity = '0';
+      setTimeout(function () {
+        idx = (idx + 1) % slides.length;
+        title.textContent = slides[idx].title;
+        body.textContent = slides[idx].body;
+        dots.forEach(function (d, i) {
+          d.style.backgroundColor = i === idx ? activeDot : inactiveDot;
+        });
+        el.style.opacity = '1';
+      }, 350);
+    }, 4000);
+  }
+
+  initCarousel('human-carousel', 'human-dot', humanSlides, 'white', 'rgba(255,255,255,0.3)');
+  initCarousel('sheet-carousel', 'sheet-dot', sheetSlides, 'white', 'rgba(255,255,255,0.3)');
+}());
+</script>
+
+{# Our Approach Section #}
+<section class="py-16 lg:py-24 bg-base-100">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] mb-6">Coaching. Culture. Consulting. <br />All three. Always.</h2>
+    <p class="text-lg text-base-content/70 mb-4 max-w-3xl mx-auto leading-relaxed">Most firms choose a lane &mdash; people or performance. We don&rsquo;t. Because real, lasting change only happens when human connection and strategic execution move together.</p>
+    <p class="text-lg text-base-content/70 mb-12 max-w-3xl mx-auto leading-relaxed">We start with the individual, expand to the team, and build outward into culture and business results. It&rsquo;s not a linear process &mdash; it&rsquo;s a continuous loop.</p>
+    <div class="flex justify-center mb-12">
+      <img src="{{ '/images/IPCCC.png' | url }}" alt="Coaching, Culture, and Consulting framework" class="w-full max-w-2xl h-auto">
+    </div>
+    <p class="text-xl font-bold font-[family-name:var(--font-display)] text-base-content/40 italic">Humans before spreadsheets &mdash; always.</p>
+  </div>
+</section>
+
+{# Programs Section #}
+<section class="py-16 lg:py-24 bg-base-200">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] mb-4">Our Programs</h2>
+    <p class="text-lg text-base-content/70 mb-12 max-w-2xl leading-relaxed">Every engagement is tailored to produce real, measurable outcomes.</p>
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+
+      <div class="card bg-base-100 border border-base-300 shadow-md">
+        <div class="card-body">
+          <div class="flex justify-between items-start">
+            <h3 class="card-title text-lg">Executive &amp; life coaching</h3>
+            <span class="text-xs text-base-content/50 font-medium shrink-0 ml-4">2 hrs/month</span>
+          </div>
+          <hr class="border-base-300 my-3">
+          <p class="text-base-content/70">Individualized 1:1 coaching for CEOs, executives, and pro coaches ready to grow into their next chapter.</p>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 border border-base-300 shadow-md">
+        <div class="card-body">
+          <div class="flex justify-between items-start">
+            <h3 class="card-title text-lg">Offsite: connect &amp; align</h3>
+            <span class="text-xs text-base-content/50 font-medium shrink-0 ml-4">1&ndash;2 day offsite</span>
+          </div>
+          <hr class="border-base-300 my-3">
+          <p class="text-base-content/70">Immersive 1&ndash;2 day experiences that build the relationships and shared understanding teams need to perform.</p>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 border border-base-300 shadow-md">
+        <div class="card-body">
+          <div class="flex justify-between items-start">
+            <h3 class="card-title text-lg">Modular custom training</h3>
+            <span class="text-xs text-base-content/50 font-medium shrink-0 ml-4">2 hrs/month</span>
+          </div>
+          <hr class="border-base-300 my-3">
+          <p class="text-base-content/70">Development sessions built around your team&rsquo;s priorities &mdash; facilitated, practical, and paired with curated reading.</p>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 border border-base-300 shadow-md">
+        <div class="card-body">
+          <div class="flex justify-between items-start">
+            <h3 class="card-title text-lg">Culture design</h3>
+            <span class="text-xs text-base-content/50 font-medium shrink-0 ml-4">20 hours</span>
+          </div>
+          <hr class="border-base-300 my-3">
+          <p class="text-base-content/70">From defining values to building accountability systems &mdash; a complete approach to culture that your team actually lives.</p>
+        </div>
+      </div>
+
+    </div>
+
+    {# Flagship Program #}
+    <div class="card bg-gradient-to-br from-primary to-secondary text-white shadow-xl">
+      <div class="card-body p-8">
+        <p class="text-xs font-bold uppercase tracking-widest text-white/60 mb-3">Flagship program</p>
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-1">
+          <h3 class="text-2xl font-bold font-[family-name:var(--font-display)]">Team unlock journey</h3>
+          <span class="text-sm text-white/70 shrink-0 sm:text-right">2-day offsite + 4 hrs/month<br>over 6&ndash;12 months</span>
+        </div>
+        <hr class="border-white/20 my-4">
+        <p class="text-white/90 text-lg leading-relaxed max-w-2xl">Combine all four experiences into a comprehensive transformation. Emerge with a remade team &mdash; connected to each other, to your vision and values, and to a shared goal. All rowing in the same direction.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{# Founder Section #}
+<section class="py-16 lg:py-24 bg-neutral">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-12">Purpose driven from the inside out.</h2>
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <img src="{{ '/images/vivek-headshot.png' | url }}" alt="vivek, Founder of Infinite Potential" class="w-full max-w-sm mx-auto lg:mx-0 rounded-2xl shadow-xl">
+      </div>
+      <div>
+        <p class="text-lg text-white/80 mb-6 leading-relaxed">After 20+ years as an investor &mdash; including co-founding a real estate firm that grew to $2.5B in assets &mdash; vivek founded Infinite Potential in 2023. Not because he reached the top, but because at 42, he finally found his purpose.</p>
+        <p class="text-lg text-white/80 mb-10 leading-relaxed">His dream is simple: to help others&rsquo; dreams come true.</p>
+        <blockquote class="border-l-2 border-accent pl-6">
+          <p class="text-xl italic text-white/90 leading-relaxed mb-4">
+            &ldquo;After 42 years of life, I discovered I am now living my life&rsquo;s purpose through this work.&rdquo;
+          </p>
+          <cite class="text-sm text-white/50 not-italic">&mdash; vivek, Founder</cite>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# CTA Section #}
+<section id="contact" class="bg-gradient-to-br from-primary to-secondary text-white py-16 lg:py-24">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <blockquote class="mb-10">
+      <p class="text-2xl italic text-white/90 leading-relaxed">
+        &ldquo;We shall not cease from exploration, and the end of all our exploring will be to arrive where we started and know the place for the first time.&rdquo;
+      </p>
+      <cite class="block mt-4 text-sm text-white/60 not-italic">&mdash; T.S. Eliot</cite>
+    </blockquote>
+    <h2 class="text-4xl font-bold font-[family-name:var(--font-display)] mb-8">Ready to unlock your potential?</h2>
+    <a href="#" class="btn btn-accent btn-lg text-white">Connect with us</a>
+  </div>
+</section>

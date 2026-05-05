@@ -1,0 +1,536 @@
+---
+layout: base.njk
+title: Infinite Potential
+---
+
+{# ============================================================
+   SPACE THEME OVERRIDES  (dark header + footer to match)
+   ============================================================ #}
+<style>
+  body { background: #06061a; }
+  body > header {
+    background: rgba(6, 6, 26, 0.88) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    position: relative;
+    z-index: 50;
+  }
+  body > header a { color: white !important; }
+  body > footer {
+    background: #06061a !important;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    position: relative;
+    z-index: 10;
+  }
+  body > footer p { color: rgba(255,255,255,0.35) !important; }
+  #play-btn { transition: background .2s ease, transform .2s ease; }
+  #video-facade:hover #play-btn { background: rgba(255,255,255,.22) !important; transform: scale(1.08); }
+  #hero-video { transform-origin: top center; }
+</style>
+
+{# ============================================================
+   FIXED SPACE LAYER  (lives behind all content, z-index: -1)
+   ============================================================ #}
+
+{# Ambient star background — fills the viewport, stays fixed as you scroll #}
+<canvas id="space-bg" style="position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
+
+{# Nebula blobs — large soft colour clouds that parallax on scroll #}
+<div style="position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;">
+  <div id="nb1" style="position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(112,87,232,.45) 0%,transparent 65%);top:5%;left:-15%;will-change:transform;"></div>
+  <div id="nb2" style="position:absolute;width:650px;height:650px;border-radius:50%;background:radial-gradient(circle,rgba(40,218,252,.32) 0%,transparent 65%);top:60%;right:-10%;will-change:transform;"></div>
+  <div id="nb3" style="position:absolute;width:550px;height:550px;border-radius:50%;background:radial-gradient(circle,rgba(71,143,249,.38) 0%,transparent 65%);top:40%;left:30%;will-change:transform;"></div>
+</div>
+
+{# Shooting stars container #}
+<div id="shooting-stars" style="position:fixed;inset:0;z-index:5;pointer-events:none;overflow:hidden;"></div>
+
+{# ============================================================
+   HERO  — animated star canvas + scroll-to-unlock
+   ============================================================ #}
+<section class="relative min-h-screen flex flex-col items-center justify-start text-center px-4 pt-20 lg:pt-28 pb-24 overflow-hidden" style="background:#000;">
+  <canvas id="hero-stars" class="absolute inset-0 w-full h-full"></canvas>
+  <div class="max-w-4xl mx-auto relative z-10">
+    <h1 class="text-5xl lg:text-6xl font-bold font-[family-name:var(--font-display)] mb-2 leading-tight" style="text-shadow:0 0 80px rgba(112,87,232,.35);position:relative;z-index:2;">
+      <span class="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">We believe you have<br />infinite potential.</span>
+      <span id="hero-subtitle" class="text-white block mt-2" style="opacity:0;transform:translateY(16px);transition:opacity .4s ease,transform .4s ease;">We help you unlock it.</span>
+    </h1>
+    <div id="hero-video" class="relative overflow-hidden mb-10" style="opacity:0;transform:scale(0.5) translateY(100px);width:130%;margin-left:-15%;padding-bottom:73.125%;border-radius:2rem;box-shadow:0 0 60px rgba(71,143,249,.2),0 30px 60px rgba(0,0,0,.6);z-index:1;">
+      <iframe
+        id="hero-iframe"
+        src=""
+        data-src="https://player.vimeo.com/video/849443158?autoplay=1"
+        class="absolute inset-0 w-full h-full"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen
+        style="display:none;"></iframe>
+      <div id="video-facade" class="absolute inset-0 flex items-center justify-center" style="background:#06061a;cursor:pointer;" onclick="this.style.display='none';var f=document.getElementById('hero-iframe');f.src=f.dataset.src;f.style.display='block';">
+        <div id="play-btn" style="width:88px;height:88px;border-radius:50%;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 9L29 18L13 27V9Z" fill="white"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div id="hero-cta" class="mt-2" style="opacity:0;transform:translateY(16px);transition:opacity .4s ease .25s,transform .4s ease .25s;">
+      <a href="#contact" class="btn btn-accent btn-lg text-white font-semibold">Connect with us</a>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var canvas=document.getElementById('hero-stars');
+  if(!canvas)return;
+  var ctx=canvas.getContext('2d');
+  var W,H,stars=[],raf,t=0;
+
+  function initStars(){
+    W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;stars=[];
+    for(var i=0;i<250;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*.6+.1,base:Math.random()*.5+.3,twinkle:Math.random()<.15,speed:Math.random()*.03+.02,phase:Math.random()*Math.PI*2,parallax:.04,glow:false});
+    for(var j=0;j<80;j++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*.9+.3,base:Math.random()*.4+.4,twinkle:Math.random()<.25,speed:Math.random()*.06+.03,phase:Math.random()*Math.PI*2,parallax:.14,glow:false});
+    for(var k=0;k<20;k++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+.8,base:Math.random()*.3+.7,twinkle:Math.random()<.45,speed:Math.random()*.1+.05,phase:Math.random()*Math.PI*2,parallax:.28,glow:true});
+  }
+
+  function drawBg(){
+    var bg=ctx.createRadialGradient(W*.4,H*.35,0,W*.5,H*.5,W*.9);
+    bg.addColorStop(0,'#0d0d2b');bg.addColorStop(.5,'#06061a');bg.addColorStop(1,'#020208');
+    ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    var n1=ctx.createRadialGradient(W*.65,H*.35,0,W*.65,H*.35,W*.45);
+    n1.addColorStop(0,'rgba(112,87,232,.18)');n1.addColorStop(.6,'rgba(71,143,249,.07)');n1.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=n1;ctx.fillRect(0,0,W,H);
+    var n2=ctx.createRadialGradient(W*.25,H*.65,0,W*.25,H*.65,W*.35);
+    n2.addColorStop(0,'rgba(40,218,252,.1)');n2.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=n2;ctx.fillRect(0,0,W,H);
+  }
+
+  var subtitle=document.getElementById('hero-subtitle');
+  var heroVideo=document.getElementById('hero-video');
+  var unlocked=false,effectiveScroll=0,UNLOCK_AT=500,allDone=false;
+
+  document.documentElement.style.overflowY='scroll';
+  function snapToTop(){if(!unlocked)window.scrollTo(0,0);}
+  window.addEventListener('scroll',snapToTop);
+
+  function doUnlock(){
+    if(unlocked)return;unlocked=true;allDone=true;
+    document.documentElement.style.overflowY='';
+    window.removeEventListener('scroll',snapToTop);
+    if(subtitle){subtitle.style.opacity='1';subtitle.style.transform='translateY(0)';}
+    if(heroVideo){
+      heroVideo.style.opacity='1';heroVideo.style.transform='scale(1) translateY(-40px)';
+      var facade=document.getElementById('video-facade');
+      var iframe=document.getElementById('hero-iframe');
+      if(facade&&iframe&&facade.style.display!=='none'){facade.style.display='none';iframe.src=iframe.dataset.src;iframe.style.display='block';}
+    }
+    var heroCta=document.getElementById('hero-cta');
+    if(heroCta){heroCta.style.opacity='1';heroCta.style.transform='translateY(0)';}
+    window.removeEventListener('wheel',onWheel);
+    window.removeEventListener('keydown',onKeyDown);
+    window.removeEventListener('touchmove',onTouchMove);
+    window.removeEventListener('touchstart',onTouchStart);
+  }
+
+  function onWheel(e){if(unlocked)return;e.preventDefault();effectiveScroll=Math.min(UNLOCK_AT,effectiveScroll+Math.min(Math.abs(e.deltaY),80));if(effectiveScroll>=UNLOCK_AT)doUnlock();}
+  var touchStartY=0;
+  function onTouchStart(e){touchStartY=e.touches[0].clientY;}
+  function onTouchMove(e){if(unlocked)return;e.preventDefault();var delta=touchStartY-e.touches[0].clientY;touchStartY=e.touches[0].clientY;effectiveScroll=Math.min(UNLOCK_AT,effectiveScroll+Math.max(0,delta));if(effectiveScroll>=UNLOCK_AT)doUnlock();}
+  function onKeyDown(e){if(unlocked)return;if(['ArrowDown',' ','PageDown'].indexOf(e.key)>-1){e.preventDefault();effectiveScroll=Math.min(UNLOCK_AT,effectiveScroll+80);if(effectiveScroll>=UNLOCK_AT)doUnlock();}}
+  window.addEventListener('wheel',onWheel,{passive:false});
+  window.addEventListener('touchstart',onTouchStart,{passive:true});
+  window.addEventListener('touchmove',onTouchMove,{passive:false});
+  window.addEventListener('keydown',onKeyDown);
+
+  function updateSubtitle(s){if(!subtitle||allDone)return;var p=Math.min(1,Math.max(0,(s-40)/220));subtitle.style.opacity=p;subtitle.style.transform='translateY('+(16-p*16)+'px)';}
+  function updateHeroVideo(s){if(!heroVideo||allDone)return;var p=Math.min(1,Math.max(0,(s-220)/240));var e=1-Math.pow(1-p,3);heroVideo.style.opacity=e;heroVideo.style.transform='scale('+(0.5+e*0.5)+') translateY('+(100-e*140)+'px)';}
+
+  function animate(){
+    t++;
+    var scrollY=unlocked?(window.scrollY||window.pageYOffset):effectiveScroll;
+    updateSubtitle(scrollY);updateHeroVideo(scrollY);
+    ctx.clearRect(0,0,W,H);drawBg();
+    for(var i=0;i<stars.length;i++){
+      var s=stars[i];
+      var sy=((s.y-scrollY*s.parallax)%H+H)%H;
+      var op=s.twinkle?Math.max(.05,Math.min(1,s.base+Math.sin(t*s.speed+s.phase)*.35)):s.base;
+      if(s.glow){
+        var g=ctx.createRadialGradient(s.x,sy,0,s.x,sy,s.r*5);
+        g.addColorStop(0,'rgba(255,255,255,'+op+')');
+        g.addColorStop(.4,'rgba(200,220,255,'+(op*.25)+')');
+        g.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.fillStyle=g;ctx.fillRect(s.x-s.r*5,sy-s.r*5,s.r*10,s.r*10);
+      }
+      ctx.beginPath();ctx.arc(s.x,sy,s.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,255,255,'+op+')';ctx.fill();
+    }
+    raf=requestAnimationFrame(animate);
+  }
+
+  function resize(){cancelAnimationFrame(raf);initStars();animate();}
+  initStars();animate();window.addEventListener('resize',resize);
+}());
+</script>
+
+
+{# ============================================================
+   APPROACH SECTION  — planet accent in top-right corner
+   ============================================================ #}
+<section class="relative py-16 lg:py-24 overflow-hidden" style="background:#070718;">
+  <canvas class="section-stars absolute inset-0 w-full h-full" style="pointer-events:none;z-index:0;"></canvas>
+  {# Planet — blurred radial blob evoking a distant world #}
+  <div style="position:absolute;top:-100px;right:-100px;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle at 35% 35%,rgba(71,143,249,.18) 0%,rgba(112,87,232,.08) 40%,transparent 65%);filter:blur(40px);pointer-events:none;"></div>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+    <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-6" style="text-shadow:0 0 50px rgba(71,143,249,.5);">Coaching. Culture. Consulting. <br />All three. Always.</h2>
+    <p class="text-lg text-white/70 mb-4 max-w-3xl mx-auto leading-relaxed">Most firms choose a lane &mdash; people or performance. We don&rsquo;t. Because real, lasting change only happens when human connection and strategic execution move together.</p>
+    <p class="text-lg text-white/70 mb-12 max-w-3xl mx-auto leading-relaxed">We start with the individual, expand to the team, and build outward into culture and business results. It&rsquo;s not a linear process &mdash; it&rsquo;s a continuous loop.</p>
+    <div class="flex justify-center mb-12">
+      <img src="{{ '/images/IPCCC-transparent.png' | url }}" alt="Coaching, Culture, and Consulting framework" class="w-full max-w-2xl h-auto">
+    </div>
+  </div>
+</section>
+
+{# ============================================================
+   PROGRAMS SECTION  — glassmorphism cards + glow on flagship
+   ============================================================ #}
+<section class="relative py-16 lg:py-24 overflow-hidden" style="background:#09091e;">
+  <canvas class="section-stars absolute inset-0 w-full h-full" style="pointer-events:none;z-index:0;"></canvas>
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 15% 50%,rgba(112,87,232,.18) 0%,transparent 50%),radial-gradient(ellipse at 90% 80%,rgba(40,218,252,.12) 0%,transparent 45%);pointer-events:none;"></div>
+  {# Small cyan planet in bottom-left #}
+  <div style="position:absolute;bottom:-60px;left:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle at 45% 45%,rgba(40,218,252,.14) 0%,rgba(71,143,249,.07) 40%,transparent 65%);filter:blur(30px);pointer-events:none;"></div>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-4" style="text-shadow:0 0 40px rgba(112,87,232,.4);">Our Programs</h2>
+    <p class="text-lg text-white/70 mb-12 max-w-2xl leading-relaxed">Every engagement is tailored to produce real, measurable outcomes.</p>
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+
+      <div class="card shadow-md" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(8px);">
+        <div class="card-body">
+          <div class="flex justify-between items-start">
+            <h3 class="card-title text-lg text-white">Executive &amp; life coaching</h3>
+            <span class="text-xs text-white/40 font-medium shrink-0 ml-4">2 hrs/month</span>
+          </div>
+          <hr class="border-white/10 my-3">
+          <p class="text-white/70">Individualized 1:1 coaching for CEOs, executives, and pro coaches ready to grow into their next chapter.</p>
+        </div>
+      </div>
+
+      <div class="card shadow-md" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(8px);">
+        <div class="card-body">
+          <div class="flex justify-between items-start">
+            <h3 class="card-title text-lg text-white">Offsite: connect &amp; align</h3>
+            <span class="text-xs text-white/40 font-medium shrink-0 ml-4">1&ndash;2 day offsite</span>
+          </div>
+          <hr class="border-white/10 my-3">
+          <p class="text-white/70">Immersive 1&ndash;2 day experiences that build the relationships and shared understanding teams need to perform.</p>
+        </div>
+      </div>
+
+      <div class="card shadow-md" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(8px);">
+        <div class="card-body">
+          <div class="flex justify-between items-start">
+            <h3 class="card-title text-lg text-white">Modular custom training</h3>
+            <span class="text-xs text-white/40 font-medium shrink-0 ml-4">2 hrs/month</span>
+          </div>
+          <hr class="border-white/10 my-3">
+          <p class="text-white/70">Development sessions built around your team&rsquo;s priorities &mdash; facilitated, practical, and paired with curated reading.</p>
+        </div>
+      </div>
+
+      <div class="card shadow-md" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(8px);">
+        <div class="card-body">
+          <div class="flex justify-between items-start">
+            <h3 class="card-title text-lg text-white">Culture design</h3>
+            <span class="text-xs text-white/40 font-medium shrink-0 ml-4">20 hours</span>
+          </div>
+          <hr class="border-white/10 my-3">
+          <p class="text-white/70">From defining values to building accountability systems &mdash; a complete approach to culture that your team actually lives.</p>
+        </div>
+      </div>
+
+    </div>
+
+    {# Flagship — gradient glass with outer glow #}
+    <div class="card shadow-xl" style="background:linear-gradient(135deg,rgba(112,87,232,.75),rgba(71,143,249,.75));border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(12px);box-shadow:0 0 50px rgba(112,87,232,.3),0 25px 50px rgba(0,0,0,.4);">
+      <div class="card-body p-8">
+        <p class="text-xs font-bold uppercase tracking-widest text-white/60 mb-3">Flagship program</p>
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-1">
+          <h3 class="text-2xl font-bold font-[family-name:var(--font-display)] text-white">Team unlock journey</h3>
+          <span class="text-sm text-white/70 shrink-0 sm:text-right">2-day offsite + 4 hrs/month<br>over 6&ndash;12 months</span>
+        </div>
+        <hr class="border-white/20 my-4">
+        <p class="text-white/90 text-lg leading-relaxed max-w-2xl">Combine all four experiences into a comprehensive transformation. Emerge with a remade team &mdash; connected to each other, to your vision and values, and to a shared goal. All rowing in the same direction.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+{# ============================================================
+   FOUNDER SECTION  — nebula halo + planet + glowing photo
+   ============================================================ #}
+<section class="relative py-16 lg:py-24 overflow-hidden" style="background:#06061a;">
+  <canvas class="section-stars absolute inset-0 w-full h-full" style="pointer-events:none;z-index:0;"></canvas>
+  {# Nebula halo behind founder photo #}
+  <div style="position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(112,87,232,.14) 0%,rgba(40,218,252,.05) 50%,transparent 70%);top:50%;left:0%;transform:translate(-20%,-50%);filter:blur(20px);pointer-events:none;"></div>
+  {# Planet — top-right corner #}
+  <div style="position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle at 38% 38%,rgba(71,143,249,.20) 0%,rgba(112,87,232,.10) 45%,transparent 65%);filter:blur(35px);pointer-events:none;"></div>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-12" style="text-shadow:0 0 40px rgba(40,218,252,.35);">Purpose driven from the inside out.</h2>
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div>
+<img src="{{ '/images/vivek-headshot.png' | url }}" alt="vivek, Founder of Infinite Potential" class="w-full max-w-52 mx-auto lg:mx-0 rounded-2xl" style="box-shadow:0 0 60px rgba(112,87,232,.3),0 25px 50px rgba(0,0,0,.5);">
+      </div>
+      <div>
+        <p class="text-lg text-white/80 mb-6 leading-relaxed">After 20+ years as an investor &mdash; including co-founding a real estate firm that grew to $2.5B in assets &mdash; vivek founded Infinite Potential in 2023. Not because he reached the top, but because at 42, he finally found his purpose.</p>
+        <p class="text-lg text-white/80 mb-10 leading-relaxed">His dream is simple: to help others&rsquo; dreams come true.</p>
+        <blockquote style="border-left:2px solid #28dafc;padding-left:1.5rem;">
+          <p class="text-xl italic leading-relaxed mb-4" style="color:rgba(255,255,255,.9);text-shadow:0 0 30px rgba(40,218,252,.3);">
+            &ldquo;After 42 years of life, I discovered I am now living my life&rsquo;s purpose through this work.&rdquo;
+          </p>
+          <cite class="text-sm text-white/50 not-italic">&mdash; vivek, Founder</cite>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ============================================================
+   CTA SECTION  — gradient + star canvas overlay + glow
+   ============================================================ #}
+<section id="contact" class="relative overflow-hidden text-white py-16 lg:py-24" style="background:linear-gradient(135deg,rgba(112,87,232,.92),rgba(71,143,249,.92));">
+  {# Star canvas layered on top of gradient #}
+  <canvas id="cta-stars" class="absolute inset-0 w-full h-full" style="opacity:.45;pointer-events:none;"></canvas>
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(40,218,252,.12) 0%,transparent 60%);pointer-events:none;"></div>
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+    <blockquote class="mb-10">
+      <p class="text-2xl italic text-white/90 leading-relaxed">
+        &ldquo;We shall not cease from exploration, and the end of all our exploring will be to arrive where we started and know the place for the first time.&rdquo;
+      </p>
+      <cite class="block mt-4 text-sm text-white/60 not-italic">&mdash; T.S. Eliot</cite>
+    </blockquote>
+    <h2 class="text-4xl font-bold font-[family-name:var(--font-display)] mb-8" style="text-shadow:0 0 40px rgba(255,255,255,.3);">Ready to unlock your potential?</h2>
+    <a href="#" class="btn btn-lg font-bold" style="background:white;color:#7057e8;border:none;box-shadow:0 0 30px rgba(255,255,255,.25);">Connect with us</a>
+  </div>
+</section>
+
+{# ============================================================
+   NEWSLETTER SECTION
+   ============================================================ #}
+<section class="relative overflow-hidden py-16 lg:py-24" style="background:#07071a;">
+  <canvas class="section-stars absolute inset-0 w-full h-full" style="pointer-events:none;z-index:0;"></canvas>
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(112,87,232,.12) 0%,transparent 60%);pointer-events:none;"></div>
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+    <h2 class="text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-6" style="text-shadow:0 0 40px rgba(112,87,232,.4);">Join a Community of Leaders<br>Who Look Inward</h2>
+    <p class="text-lg mb-8 text-white/70 max-w-xl mx-auto">Every two weeks we share a piece of wisdom and a reflection prompt. It&rsquo;s a simple practice that compounds over time.<br />For leaders who know that change happens from the inside out.</p>
+    <form action="https://app.kit.com/forms/9252338/subscriptions" class="seva-form formkit-form" method="post" data-sv-form="9252338" data-uid="8630c1aad3" data-format="inline" data-version="5">
+      <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
+      <div data-element="fields" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <input class="input bg-white/10 border border-white/20 text-white placeholder:text-white/40 flex-grow" name="email_address" aria-label="Email Address" placeholder="Email Address" required type="email">
+        <button data-element="submit" class="btn btn-accent text-white">
+          <div class="formkit-spinner"><div></div><div></div><div></div></div>
+          <span>Join the Community</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+{# ============================================================
+   GLOBAL SCRIPTS
+   ============================================================ #}
+<script>
+// ---- Ambient star background (fills fixed viewport canvas) ----
+(function(){
+  var c=document.getElementById('space-bg');if(!c)return;
+  var ctx=c.getContext('2d');
+  var W,H,stars=[],t=0;
+  function init(){
+    W=c.width=window.innerWidth;H=c.height=window.innerHeight;stars=[];
+    for(var i=0;i<300;i++)stars.push({
+      x:Math.random()*W,y:Math.random()*H,
+      r:Math.random()*.7+.1,
+      base:Math.random()*.35+.1,
+      twinkle:Math.random()<.2,
+      speed:Math.random()*.015+.005,
+      phase:Math.random()*Math.PI*2
+    });
+  }
+  function draw(){
+    t++;
+    ctx.fillStyle='#06061a';ctx.fillRect(0,0,W,H);
+    for(var i=0;i<stars.length;i++){
+      var s=stars[i];
+      var op=s.twinkle?Math.max(.05,Math.min(.65,s.base+Math.sin(t*s.speed+s.phase)*.18)):s.base;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,255,255,'+op+')';ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  init();draw();
+  window.addEventListener('resize',function(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;});
+}());
+
+// ---- Shooting stars ----
+(function(){
+  var container=document.getElementById('shooting-stars');if(!container)return;
+  function shoot(){
+    var star=document.createElement('div');
+    // Randomise direction: mostly downward-right but with real variance.
+    // Negative angle = travelling toward lower-right (classic shooting star).
+    // Occasionally flip to lower-left for variety.
+    var angle=-(12+Math.random()*38);           // -12° to -50°
+    if(Math.random()<0.25) angle=-angle;         // ~25% go the other way
+    var sx,sy;
+    // Spawn position: if going right, start from left half; if going left, start from right half
+    if(angle<0){
+      sx=Math.random()*window.innerWidth*.6;
+      sy=Math.random()*window.innerHeight*.5;
+    } else {
+      sx=window.innerWidth*.4+Math.random()*window.innerWidth*.5;
+      sy=Math.random()*window.innerHeight*.5;
+    }
+    var len=100+Math.random()*140;
+    var travel=260+Math.random()*200;
+    star.style.cssText='position:absolute;top:'+sy+'px;left:'+sx+'px;width:'+len+'px;height:2px;'
+      +'background:linear-gradient(90deg,rgba(255,255,255,0),white 50%,rgba(255,255,255,0));'
+      +'transform-origin:left center;transform:rotate('+angle+'deg);opacity:0;border-radius:2px;'
+      +'box-shadow:0 0 6px 1px rgba(255,255,255,.6);';
+    container.appendChild(star);
+    var start=null,dur=480+Math.random()*280;
+    function frame(ts){
+      if(!start)start=ts;
+      var p=(ts-start)/dur;
+      if(p>=1){if(container.contains(star))container.removeChild(star);return;}
+      star.style.opacity=p<.1?p/.1:p>.6?(1-p)/.4:1;
+      star.style.transform='rotate('+angle+'deg) translateX('+(p*travel)+'px)';
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+    setTimeout(shoot,2000+Math.random()*3000);
+  }
+  setTimeout(shoot,300);
+}());
+
+// ---- Nebula blob parallax ----
+(function(){
+  var nb1=document.getElementById('nb1'),nb2=document.getElementById('nb2'),nb3=document.getElementById('nb3');
+  if(!nb1)return;
+  window.addEventListener('scroll',function(){
+    var sy=window.scrollY||window.pageYOffset;
+    nb1.style.transform='translateY('+(sy*.06)+'px)';
+    nb2.style.transform='translateY('+(-sy*.04)+'px)';
+    nb3.style.transform='translateY('+(sy*.03)+'px)';
+  },{passive:true});
+}());
+
+// ---- Section star canvases (3-layer parallax, density fades with scroll depth) ----
+(function(){
+  var canvases=document.querySelectorAll('.section-stars');
+  // Density scale per section: richest near the hero, sparsest at the bottom.
+  // Four content sections → scales of ~85%, 60%, 40%, 25%.
+  var densityScales=[0.85,0.60,0.40,0.25];
+  canvases.forEach(function(c,idx){
+    var scale=densityScales[Math.min(idx,densityScales.length-1)];
+    var ctx=c.getContext('2d');
+    var W,H,stars=[],t=(Math.random()*2000)|0;
+    function init(){
+      W=c.width=c.offsetWidth||c.parentElement.offsetWidth;
+      H=c.height=c.offsetHeight||c.parentElement.offsetHeight;
+      if(!W||!H)return;
+      stars=[];
+      // Layer 1 — distant, slow, small
+      var n1=Math.max(20,Math.min(110,((W*H/8000)*scale)|0));
+      for(var i=0;i<n1;i++)stars.push({
+        x:Math.random()*W,y:Math.random()*H,
+        r:Math.random()*.7+.2,
+        base:Math.random()*.4+.2,
+        twinkle:Math.random()<.18,
+        speed:Math.random()*.025+.008,
+        phase:Math.random()*Math.PI*2,
+        parallax:Math.random()*.02+.02,
+        glow:false
+      });
+      // Layer 2 — mid distance
+      var n2=Math.max(8,((W*H/20000)*scale)|0);
+      for(var j=0;j<n2;j++)stars.push({
+        x:Math.random()*W,y:Math.random()*H,
+        r:Math.random()*1.1+.4,
+        base:Math.random()*.35+.35,
+        twinkle:Math.random()<.3,
+        speed:Math.random()*.05+.02,
+        phase:Math.random()*Math.PI*2,
+        parallax:Math.random()*.08+.08,
+        glow:false
+      });
+      // Layer 3 — bright, close, glowing
+      var n3=Math.max(3,((W*H/50000)*scale)|0);
+      for(var k=0;k<n3;k++)stars.push({
+        x:Math.random()*W,y:Math.random()*H,
+        r:Math.random()*1.5+.8,
+        base:Math.random()*.25+.65,
+        twinkle:Math.random()<.5,
+        speed:Math.random()*.08+.04,
+        phase:Math.random()*Math.PI*2,
+        parallax:Math.random()*.12+.18,
+        glow:true
+      });
+    }
+    function draw(){
+      t++;
+      var scrollY=window.scrollY||window.pageYOffset;
+      ctx.clearRect(0,0,W,H);
+      for(var i=0;i<stars.length;i++){
+        var s=stars[i];
+        var sy=((s.y-scrollY*s.parallax)%H+H)%H;
+        var op=s.twinkle?Math.max(.05,Math.min(1,s.base+Math.sin(t*s.speed+s.phase)*.32)):s.base;
+        if(s.glow){
+          var g=ctx.createRadialGradient(s.x,sy,0,s.x,sy,s.r*5);
+          g.addColorStop(0,'rgba(255,255,255,'+op+')');
+          g.addColorStop(.4,'rgba(200,220,255,'+(op*.25)+')');
+          g.addColorStop(1,'rgba(0,0,0,0)');
+          ctx.fillStyle=g;ctx.fillRect(s.x-s.r*5,sy-s.r*5,s.r*10,s.r*10);
+        }
+        ctx.beginPath();ctx.arc(s.x,sy,s.r,0,Math.PI*2);
+        ctx.fillStyle='rgba(255,255,255,'+op+')';ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+    init();draw();
+    window.addEventListener('resize',init);
+  });
+}());
+
+// ---- CTA section star canvas ----
+(function(){
+  var c=document.getElementById('cta-stars');if(!c)return;
+  var ctx=c.getContext('2d');var W,H,stars=[],t=0;
+  function init(){
+    W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;stars=[];
+    for(var i=0;i<120;i++)stars.push({
+      x:Math.random()*W,y:Math.random()*H,
+      r:Math.random()*1.1+.2,
+      base:Math.random()*.5+.2,
+      twinkle:Math.random()<.4,
+      speed:Math.random()*.04+.01,
+      phase:Math.random()*Math.PI*2
+    });
+  }
+  function draw(){
+    t++;ctx.clearRect(0,0,W,H);
+    for(var i=0;i<stars.length;i++){
+      var s=stars[i];
+      var op=s.twinkle?Math.max(.05,Math.min(1,s.base+Math.sin(t*s.speed+s.phase)*.3)):s.base;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,255,255,'+op+')';ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  init();draw();
+  window.addEventListener('resize',function(){if(c.offsetWidth>0)init();});
+}());
+</script>

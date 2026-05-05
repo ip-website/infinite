@@ -1,0 +1,265 @@
+---
+layout: base.njk
+title: About | Infinite Potential
+---
+
+{# ============================================================
+   SPACE THEME OVERRIDES
+   ============================================================ #}
+<style>
+  body { background: #06061a; }
+  body > header {
+    background: rgba(6, 6, 26, 0.88) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    position: relative;
+    z-index: 50;
+  }
+  body > header a { color: white !important; }
+  body > footer {
+    background: #06061a !important;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    position: relative;
+    z-index: 10;
+  }
+  body > footer p { color: rgba(255,255,255,0.35) !important; }
+</style>
+
+{# Ambient star background #}
+<canvas id="space-bg" style="position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
+
+{# Nebula blobs #}
+<div style="position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;">
+  <div id="nb1" style="position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(112,87,232,.45) 0%,transparent 65%);top:5%;left:-15%;will-change:transform;"></div>
+  <div id="nb2" style="position:absolute;width:650px;height:650px;border-radius:50%;background:radial-gradient(circle,rgba(40,218,252,.32) 0%,transparent 65%);top:60%;right:-10%;will-change:transform;"></div>
+  <div id="nb3" style="position:absolute;width:550px;height:550px;border-radius:50%;background:radial-gradient(circle,rgba(71,143,249,.38) 0%,transparent 65%);top:40%;left:30%;will-change:transform;"></div>
+</div>
+
+{# ============================================================
+   PAGE HERO
+   ============================================================ #}
+<section class="relative py-24 lg:py-32 text-center overflow-hidden" style="background:#000;">
+  <canvas id="hero-stars" class="absolute inset-0 w-full h-full"></canvas>
+  <div class="max-w-3xl mx-auto px-4 relative z-10">
+    <p class="text-xs font-bold uppercase tracking-widest mb-4" style="color:rgba(112,87,232,.8);">Our Story</p>
+    <h1 class="text-5xl lg:text-6xl font-bold font-[family-name:var(--font-display)] leading-tight mb-6" style="text-shadow:0 0 80px rgba(112,87,232,.35);">
+      <span class="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">Purpose driven<br />from the inside out.</span>
+    </h1>
+    <p class="text-xl text-white/70 leading-relaxed">We believe every leader and every team has more inside them than they've yet discovered.</p>
+  </div>
+</section>
+
+{# ============================================================
+   FOUNDER SECTION
+   ============================================================ #}
+<section class="relative py-16 lg:py-24 overflow-hidden" style="background:#06061a;">
+  <canvas class="section-stars absolute inset-0 w-full h-full" style="pointer-events:none;z-index:0;"></canvas>
+  <div style="position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(112,87,232,.14) 0%,rgba(40,218,252,.05) 50%,transparent 70%);top:50%;left:0%;transform:translate(-20%,-50%);filter:blur(20px);pointer-events:none;"></div>
+  <div style="position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle at 38% 38%,rgba(71,143,249,.20) 0%,rgba(112,87,232,.10) 45%,transparent 65%);filter:blur(35px);pointer-events:none;"></div>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <img src="{{ '/images/vivek-headshot.png' | url }}" alt="vivek, Founder of Infinite Potential" class="w-full max-w-sm mx-auto lg:mx-0 rounded-2xl" style="box-shadow:0 0 60px rgba(112,87,232,.3),0 25px 50px rgba(0,0,0,.5);">
+      </div>
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest mb-4" style="color:rgba(40,218,252,.8);">Founder</p>
+        <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-6" style="text-shadow:0 0 40px rgba(40,218,252,.35);">vivek</h2>
+        <p class="text-lg text-white/80 mb-6 leading-relaxed">After 20+ years as an investor &mdash; including co-founding a real estate firm that grew to $2.5B in assets &mdash; vivek founded Infinite Potential in 2023. Not because he reached the top, but because at 42, he finally found his purpose.</p>
+        <p class="text-lg text-white/80 mb-10 leading-relaxed">His dream is simple: to help others&rsquo; dreams come true.</p>
+        <blockquote style="border-left:2px solid #28dafc;padding-left:1.5rem;">
+          <p class="text-xl italic leading-relaxed mb-4" style="color:rgba(255,255,255,.9);text-shadow:0 0 30px rgba(40,218,252,.3);">
+            &ldquo;After 42 years of life, I discovered I am now living my life&rsquo;s purpose through this work.&rdquo;
+          </p>
+          <cite class="text-sm text-white/50 not-italic">&mdash; vivek, Founder</cite>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ============================================================
+   CORE VALUES SECTION
+   ============================================================ #}
+<section class="relative py-16 lg:py-24 overflow-hidden" style="background:#09091e;">
+  <canvas class="section-stars absolute inset-0 w-full h-full" style="pointer-events:none;z-index:0;"></canvas>
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(112,87,232,.15) 0%,transparent 60%);pointer-events:none;"></div>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <p class="text-xs font-bold uppercase tracking-widest mb-4 text-center" style="color:rgba(112,87,232,.8);">What We Stand For</p>
+    <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-12 text-center" style="text-shadow:0 0 40px rgba(112,87,232,.4);">Our Core Values</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+
+      <div class="card shadow-md" style="background:rgba(112,87,232,.12);border:1px solid rgba(112,87,232,.3);backdrop-filter:blur(8px);">
+        <div class="card-body p-6">
+          <h3 class="text-lg font-bold text-white mb-3">100%</h3>
+          <p class="text-sm text-white/65 leading-relaxed">We are results oriented and give 100% to everything we do; we will be fulfilled by our maximum effort, not by an outcome.</p>
+        </div>
+      </div>
+
+      <div class="card shadow-md" style="background:rgba(112,87,232,.12);border:1px solid rgba(112,87,232,.3);backdrop-filter:blur(8px);">
+        <div class="card-body p-6">
+          <h3 class="text-lg font-bold text-white mb-3">Gratitude + Grit = Greatness</h3>
+          <p class="text-sm text-white/65 leading-relaxed">We bring in focus gratitude for all things while simultaneously being resilient; we believe this powerful combination yields greatness.</p>
+        </div>
+      </div>
+
+      <div class="card shadow-md" style="background:rgba(112,87,232,.12);border:1px solid rgba(112,87,232,.3);backdrop-filter:blur(8px);">
+        <div class="card-body p-6">
+          <h3 class="text-lg font-bold text-white mb-3">Truth + Transparency = Trust</h3>
+          <p class="text-sm text-white/65 leading-relaxed">We strive to establish and nurture everlasting bonds of trust via truth and transparency.</p>
+        </div>
+      </div>
+
+      <div class="card shadow-md" style="background:rgba(112,87,232,.12);border:1px solid rgba(112,87,232,.3);backdrop-filter:blur(8px);">
+        <div class="card-body p-6">
+          <h3 class="text-lg font-bold text-white mb-3">Love In The Center</h3>
+          <p class="text-sm text-white/65 leading-relaxed">Love the self. Love humans. Love learning. Love laughter. Love the process. Love our craft. Love the journey. And we try to love adversity :-).</p>
+        </div>
+      </div>
+
+      <div class="card shadow-md" style="background:rgba(112,87,232,.12);border:1px solid rgba(112,87,232,.3);backdrop-filter:blur(8px);">
+        <div class="card-body p-6">
+          <h3 class="text-lg font-bold text-white mb-3">Flow Not Force</h3>
+          <p class="text-sm text-white/65 leading-relaxed">Like water we will flow and move effortlessly. We strive to find the harmonious intersection of where we are desired and where we desire to be.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{# ============================================================
+   COACHES SECTION
+   ============================================================ #}
+<section class="relative py-16 lg:py-24 overflow-hidden" style="background:#070718;">
+  <canvas class="section-stars absolute inset-0 w-full h-full" style="pointer-events:none;z-index:0;"></canvas>
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(40,218,252,.08) 0%,transparent 55%);pointer-events:none;"></div>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <p class="text-xs font-bold uppercase tracking-widest mb-4 text-center" style="color:rgba(40,218,252,.8);">The Team</p>
+    <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-12 text-center" style="text-shadow:0 0 40px rgba(40,218,252,.35);">Our Coaches</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8">
+
+      <div class="flex flex-col items-center text-center">
+        <img src="{{ '/images/cb.png' | url }}" alt="chris balme" class="w-24 h-24 rounded-full object-cover mb-4" style="box-shadow:0 0 30px rgba(112,87,232,.35);">
+        <h3 class="text-white font-bold mb-2">chris balme</h3>
+        <p class="text-xs text-white/50">designer</p>
+        <p class="text-xs text-white/50">dreamer</p>
+        <p class="text-xs text-white/50">collaborator</p>
+      </div>
+
+      <div class="flex flex-col items-center text-center">
+        <img src="{{ '/images/nw.png' | url }}" alt="nathalie weister" class="w-24 h-24 rounded-full object-cover mb-4" style="box-shadow:0 0 30px rgba(112,87,232,.35);">
+        <h3 class="text-white font-bold mb-2">nathalie weister</h3>
+        <p class="text-xs text-white/50">empowermentor</p>
+        <p class="text-xs text-white/50">creator</p>
+        <p class="text-xs text-white/50">collaborator</p>
+      </div>
+
+      <div class="flex flex-col items-center text-center">
+        <img src="{{ '/images/rs.png' | url }}" alt="raj shah" class="w-24 h-24 rounded-full object-cover mb-4" style="box-shadow:0 0 30px rgba(112,87,232,.35);">
+        <h3 class="text-white font-bold mb-2">raj shah</h3>
+        <p class="text-xs text-white/50">guide</p>
+        <p class="text-xs text-white/50">student</p>
+        <p class="text-xs text-white/50">collaborator</p>
+      </div>
+
+      <div class="flex flex-col items-center text-center">
+        <img src="{{ '/images/rr.png' | url }}" alt="rebekah rombom" class="w-24 h-24 rounded-full object-cover mb-4" style="box-shadow:0 0 30px rgba(112,87,232,.35);">
+        <h3 class="text-white font-bold mb-2">rebekah rombom</h3>
+        <p class="text-xs text-white/50">strategist</p>
+        <p class="text-xs text-white/50">pragmatist</p>
+        <p class="text-xs text-white/50">collaborator</p>
+      </div>
+
+      <div class="flex flex-col items-center text-center">
+        <img src="{{ '/images/jw.png' | url }}" alt="jazzy wong" class="w-24 h-24 rounded-full object-cover mb-4" style="box-shadow:0 0 30px rgba(112,87,232,.35);">
+        <h3 class="text-white font-bold mb-2">jazzy wong</h3>
+        <p class="text-xs text-white/50">adventurer</p>
+        <p class="text-xs text-white/50">facilitator</p>
+        <p class="text-xs text-white/50">collaborator</p>
+      </div>
+
+      <div class="flex flex-col items-center text-center">
+        <img src="{{ '/images/vivek-headshot.png' | url }}" alt="vivek shah" class="w-24 h-24 rounded-full object-cover mb-4" style="box-shadow:0 0 30px rgba(112,87,232,.35);">
+        <h3 class="text-white font-bold mb-2">vivek shah</h3>
+        <p class="text-xs text-white/50">lifelong learner</p>
+        <p class="text-xs text-white/50">inspirer</p>
+        <p class="text-xs text-white/50">collaborator</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{# ============================================================
+   CTA SECTION
+   ============================================================ #}
+<section id="contact" class="relative overflow-hidden text-white py-16 lg:py-24" style="background:linear-gradient(135deg,rgba(112,87,232,.92),rgba(71,143,249,.92));">
+  <canvas id="cta-stars" class="absolute inset-0 w-full h-full" style="opacity:.45;pointer-events:none;"></canvas>
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(40,218,252,.12) 0%,transparent 60%);pointer-events:none;"></div>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+    <h2 class="text-4xl font-bold font-[family-name:var(--font-display)] mb-4" style="text-shadow:0 0 40px rgba(255,255,255,.3);">Ready to unlock your potential?</h2>
+    <p class="text-lg text-white/80 mb-8">Let&rsquo;s start a conversation.</p>
+    <a href="#" class="btn btn-lg font-bold" style="background:white;color:#7057e8;border:none;box-shadow:0 0 30px rgba(255,255,255,.25);">Connect with us</a>
+  </div>
+</section>
+
+{# ============================================================
+   GLOBAL SCRIPTS
+   ============================================================ #}
+<script>
+(function(){
+  var c=document.getElementById('space-bg');if(!c)return;
+  var ctx=c.getContext('2d');
+  var W,H,stars=[],t=0;
+  function init(){
+    W=c.width=window.innerWidth;H=c.height=window.innerHeight;stars=[];
+    for(var i=0;i<300;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*.7+.1,base:Math.random()*.35+.1,twinkle:Math.random()<.2,speed:Math.random()*.015+.005,phase:Math.random()*Math.PI*2});
+  }
+  function draw(){
+    t++;ctx.fillStyle='#06061a';ctx.fillRect(0,0,W,H);
+    for(var i=0;i<stars.length;i++){var s=stars[i];var op=s.twinkle?Math.max(.05,Math.min(.65,s.base+Math.sin(t*s.speed+s.phase)*.18)):s.base;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+op+')';ctx.fill();}
+    requestAnimationFrame(draw);
+  }
+  init();draw();
+  window.addEventListener('resize',function(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;});
+}());
+
+// Hero stars
+(function(){
+  var c=document.getElementById('hero-stars');if(!c)return;
+  var ctx=c.getContext('2d');var W,H,stars=[],t=0;
+  function init(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;stars=[];for(var i=0;i<200;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*.8+.1,base:Math.random()*.4+.2,twinkle:Math.random()<.25,speed:Math.random()*.04+.01,phase:Math.random()*Math.PI*2});}
+  function draw(){t++;ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);for(var i=0;i<stars.length;i++){var s=stars[i];var op=s.twinkle?Math.max(.05,Math.min(1,s.base+Math.sin(t*s.speed+s.phase)*.3)):s.base;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+op+')';ctx.fill();}requestAnimationFrame(draw);}
+  init();draw();window.addEventListener('resize',function(){if(c.offsetWidth>0)init();});
+}());
+
+// Section star canvases
+(function(){
+  var canvases=document.querySelectorAll('.section-stars');
+  var densityScales=[0.85,0.60,0.40];
+  canvases.forEach(function(c,idx){
+    var scale=densityScales[Math.min(idx,densityScales.length-1)];
+    var ctx=c.getContext('2d');var W,H,stars=[],t=(Math.random()*2000)|0;
+    function init(){W=c.width=c.offsetWidth||c.parentElement.offsetWidth;H=c.height=c.offsetHeight||c.parentElement.offsetHeight;if(!W||!H)return;stars=[];var n=Math.max(20,((W*H/8000)*scale)|0);for(var i=0;i<n;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*.8+.2,base:Math.random()*.4+.2,twinkle:Math.random()<.2,speed:Math.random()*.025+.008,phase:Math.random()*Math.PI*2,parallax:Math.random()*.04+.02});}
+    function draw(){t++;var sy=window.scrollY||0;ctx.clearRect(0,0,W,H);for(var i=0;i<stars.length;i++){var s=stars[i];var y=((s.y-sy*s.parallax)%H+H)%H;var op=s.twinkle?Math.max(.05,Math.min(1,s.base+Math.sin(t*s.speed+s.phase)*.3)):s.base;ctx.beginPath();ctx.arc(s.x,y,s.r,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+op+')';ctx.fill();}requestAnimationFrame(draw);}
+    init();draw();window.addEventListener('resize',init);
+  });
+}());
+
+// CTA stars
+(function(){
+  var c=document.getElementById('cta-stars');if(!c)return;
+  var ctx=c.getContext('2d');var W,H,stars=[],t=0;
+  function init(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;stars=[];for(var i=0;i<120;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.1+.2,base:Math.random()*.5+.2,twinkle:Math.random()<.4,speed:Math.random()*.04+.01,phase:Math.random()*Math.PI*2});}
+  function draw(){t++;ctx.clearRect(0,0,W,H);for(var i=0;i<stars.length;i++){var s=stars[i];var op=s.twinkle?Math.max(.05,Math.min(1,s.base+Math.sin(t*s.speed+s.phase)*.3)):s.base;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+op+')';ctx.fill();}requestAnimationFrame(draw);}
+  init();draw();window.addEventListener('resize',function(){if(c.offsetWidth>0)init();});
+}());
+
+// Nebula parallax
+(function(){
+  var nb1=document.getElementById('nb1'),nb2=document.getElementById('nb2'),nb3=document.getElementById('nb3');if(!nb1)return;
+  window.addEventListener('scroll',function(){var sy=window.scrollY||0;nb1.style.transform='translateY('+(sy*.06)+'px)';nb2.style.transform='translateY('+(-sy*.04)+'px)';nb3.style.transform='translateY('+(sy*.03)+'px)';},{passive:true});
+}());
+</script>

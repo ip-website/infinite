@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="infinite">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title or site.title }}</title>
+  <meta name="description" content="{{ description or site.description }}">
+  <link rel="stylesheet" href="{{ '/styles/output.css' | url }}">
+  <script src="//embed.typeform.com/next/embed.js"></script>
+  <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
+</head>
+<body class="min-h-screen flex flex-col">
+  <header class="sticky top-0 z-50 bg-base-100/95 backdrop-blur">
+    <nav class="navbar max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="navbar-start">
+        <a href="{{ '/about/' | url }}" class="btn btn-ghost btn-sm font-medium">About</a>
+        <a href="{{ '/programs/' | url }}" class="btn btn-ghost btn-sm font-medium">Programs</a>
+      </div>
+      <div class="navbar-center">
+        <a href="{{ '/' | url }}" class="flex items-center gap-2 text-xl font-bold font-[family-name:var(--font-display)]">
+          <img src="{{ '/images/IP-LOGOMARK-COLOR-RGB.png' | url }}" alt="{{ site.name }}" class="h-8 w-auto">
+          {{ site.name }}
+        </a>
+      </div>
+      <div class="navbar-end">
+<a href="{{ '/programs/' | url }}" class="btn btn-sm btn-accent text-white font-semibold">Curious?</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="flex-grow">
+    {{ content | safe }}
+  </main>
+
+  <footer class="bg-neutral text-neutral-content py-8 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p>&copy; {{ 2026 }} {{ site.name }}. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
