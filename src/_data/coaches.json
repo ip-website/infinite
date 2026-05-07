@@ -1,0 +1,50 @@
+[
+  {
+    "fullname": "chris balme",
+    "image": "cb.png",
+    "descriptors": ["designer", "dreamer", "collaborator"],
+    "passions": ["our human potential, which I believe is so much greater than we realize. About designing organizations that help us grow and flourish. About my wife, three kids, and the beautiful California coast I get to call home."],
+    "highlights": ["leading two schools, one of which I co-founded; co-founding and leading a national nonprofit; being honored with an Ashoka Fellowship as a global changemaker; publishing a book on teaching and parenting."],
+    "focus-areas": ["understanding how to build vibrant, effective organizational cultures where everyone grows and contributes to their maximum ability."]
+  },
+  {
+    "fullname": "nathalie weister",
+    "image": "nw.png",
+    "descriptors": ["empowermentor", "creator", "collaborator"],
+    "passions": ["supporting people to step beyond their perceived limits and reclaiming their innate creative power. I’m energized by exploring diverse cultures through travel, understanding the miracle that is our human experience, and staying active in nature."],
+    "highlights": ["living and working 3+ years in Argentina and Mexico, leading diverse HR teams in various multinational organizations, publishing a book, and starting my own coaching and leadership development business after a 15-year corporate career."],
+    "focus-areas": ["co-creating transformational coaching containers and contributing to projects that foster intentional, human-centric cultures."]
+  },
+  {
+    "fullname": "raj shah",
+    "image": "rs.png",
+    "descriptors": ["guide", "student", "collaborator"],
+    "passions": ["helping people see their gifts so they can share them with the world. I love spending time with friends and family and having deep conversations. Finally, I’m on a mission to change how math is taught so kids can experience joy and wonder in math class."],
+    "highlights": ["a Ph.D. in Physics and nine years of R&D at Intel. Helping kids love math at Math Plus Academy for 17 years. Sharing my love of math and teaching with the world through public speaking engagements."],
+    "focus-areas": ["developing our coaching philosophy, frameworks, and training so our clients can have consistent and powerful, life changing experiences."]
+  },
+  {
+    "fullname": "rebekah rombom",
+    "image": "rr.png",
+    "descriptors": ["strategist", "pragmatist", "collaborator"],
+    "passions": ["actionable and specific goals; coaching & context as force multipliers; words, and all their beautiful utility. My three outstanding kids!"],
+    "highlights": ["helping start three startups; drove 20x revenue growth, oversaw teams of 150+, and led one through an acquisition and spinout. Three years as a fractional CRO + COO, working with a dozen-plus CEOs as an operator, advisor and coach."],
+    "focus-areas": ["coaching, team facilitations, and work on our internal and external frameworks & process. I also quantify and analyze our efforts across work areas."]
+  },
+  {
+    "fullname": "jazzy wong",
+    "image": "jw.png",
+    "descriptors": ["adventurer", "facilitator", "collaborator"],
+    "passions": ["travel, rescuing animals, sound baths, travel, interior design, food, plant medicine, guided yoga and meditation, deeper connections, breathwork, free diving, pottery, and living a balanced, spiritual and heart centered  life of service."],
+    "highlights": ["trauma informed therapist, prison yoga teacher, sound healer, and certified psychedelic assisted therapist. I run a private practice and facilitate wellness retreats on the Big Island of Hawaii."],
+    "focus-areas": ["are to offer therapeutic emotional, mental, and spiritual support for team members and clients. I aid in helping others grow and see their own infinite potential by looking inward and seeing through the lens of the best version of themselves."]
+  },
+  {
+    "fullname": "vivek shah",
+    "image": "vivek-headshot.png",
+    "descriptors": ["lifelong learner", "inspirer", "collaborator"],
+    "passions": ["my kiddos Kaya and Ahren, wife Pooja, family / friends in my sphere where we can have the greatest learnings and most magical experiences together! Also all things sports and coaching + learning! Draw me in with a book or movie anytime!"],
+    "highlights": ["studying finance at UT Austin and working as an investor in that arena (D. E. Shaw). Starting a real estate platform that generated 20%+ returns and managed $3B in assets in 9 years. Founder of Infinite Potential."],
+    "focus-areas": ["leading + empowering our team to be the greatest we can be - fully aligned with our vision + values. In that process, ensuring the team grows personally, financially, and professionally while helping humans + organizations reach their Infinite Potential."]
+  }
+]

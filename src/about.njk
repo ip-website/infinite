@@ -10,16 +10,6 @@ extraJs:
   - /assets/js/nebula-parallax.js
 ---
 
-{# Ambient star background #}
-<canvas id="space-bg" style="position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
-
-{# Nebula blobs #}
-<div style="position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;">
-  <div id="nb1" style="position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(112,87,232,.45) 0%,transparent 65%);top:5%;left:-15%;will-change:transform;"></div>
-  <div id="nb2" style="position:absolute;width:650px;height:650px;border-radius:50%;background:radial-gradient(circle,rgba(40,218,252,.32) 0%,transparent 65%);top:60%;right:-10%;will-change:transform;"></div>
-  <div id="nb3" style="position:absolute;width:550px;height:550px;border-radius:50%;background:radial-gradient(circle,rgba(71,143,249,.38) 0%,transparent 65%);top:40%;left:30%;will-change:transform;"></div>
-</div>
-
 {# ============================================================
    PAGE HERO
    ============================================================ #}
@@ -126,56 +116,81 @@ extraJs:
     <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-12 text-center" style="text-shadow:0 0 40px rgba(40,218,252,.35);">Our Coaches</h2>
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8">
 
+      {% for coach in coaches %}
       <div class="flex flex-col items-center text-center">
-        <img src="{{ '/images/cb.png' | url }}" alt="chris balme" class="w-24 h-24 rounded-full object-cover mb-4" style="box-shadow:0 0 30px rgba(112,87,232,.35);">
-        <h3 class="text-white font-bold mb-2">chris balme</h3>
-        <p class="text-xs text-white/50">designer</p>
-        <p class="text-xs text-white/50">dreamer</p>
-        <p class="text-xs text-white/50">collaborator</p>
+        <button
+          class="coach-trigger w-24 h-24 rounded-full overflow-hidden mb-4 cursor-pointer border-0 p-0 bg-transparent"
+          style="box-shadow:0 0 30px rgba(112,87,232,.35);transition:box-shadow .2s;"
+          data-name="{{ coach.fullname | escape }}"
+          data-image-url="{{ ('/images/' + coach.image) | url }}"
+          data-passions="{{ coach.passions[0] | escape }}"
+          data-highlights="{{ coach.highlights[0] | escape }}"
+          data-focus="{{ coach['focus-areas'][0] | escape }}"
+          aria-label="Learn more about {{ coach.fullname | escape }}"
+        >
+          <img src="{{ ('/images/' + coach.image) | url }}" alt="{{ coach.fullname }}" class="w-full h-full object-cover">
+        </button>
+        <h3 class="text-white font-bold mb-2">{{ coach.fullname }}</h3>
+        {% for descriptor in coach.descriptors %}
+        <p class="text-xs text-white/50">{{ descriptor }}</p>
+        {% endfor %}
       </div>
-
-      <div class="flex flex-col items-center text-center">
-        <img src="{{ '/images/nw.png' | url }}" alt="nathalie weister" class="w-24 h-24 rounded-full object-cover mb-4" style="box-shadow:0 0 30px rgba(112,87,232,.35);">
-        <h3 class="text-white font-bold mb-2">nathalie weister</h3>
-        <p class="text-xs text-white/50">empowermentor</p>
-        <p class="text-xs text-white/50">creator</p>
-        <p class="text-xs text-white/50">collaborator</p>
-      </div>
-
-      <div class="flex flex-col items-center text-center">
-        <img src="{{ '/images/rs.png' | url }}" alt="raj shah" class="w-24 h-24 rounded-full object-cover mb-4" style="box-shadow:0 0 30px rgba(112,87,232,.35);">
-        <h3 class="text-white font-bold mb-2">raj shah</h3>
-        <p class="text-xs text-white/50">guide</p>
-        <p class="text-xs text-white/50">student</p>
-        <p class="text-xs text-white/50">collaborator</p>
-      </div>
-
-      <div class="flex flex-col items-center text-center">
-        <img src="{{ '/images/rr.png' | url }}" alt="rebekah rombom" class="w-24 h-24 rounded-full object-cover mb-4" style="box-shadow:0 0 30px rgba(112,87,232,.35);">
-        <h3 class="text-white font-bold mb-2">rebekah rombom</h3>
-        <p class="text-xs text-white/50">strategist</p>
-        <p class="text-xs text-white/50">pragmatist</p>
-        <p class="text-xs text-white/50">collaborator</p>
-      </div>
-
-      <div class="flex flex-col items-center text-center">
-        <img src="{{ '/images/jw.png' | url }}" alt="jazzy wong" class="w-24 h-24 rounded-full object-cover mb-4" style="box-shadow:0 0 30px rgba(112,87,232,.35);">
-        <h3 class="text-white font-bold mb-2">jazzy wong</h3>
-        <p class="text-xs text-white/50">adventurer</p>
-        <p class="text-xs text-white/50">facilitator</p>
-        <p class="text-xs text-white/50">collaborator</p>
-      </div>
-
-      <div class="flex flex-col items-center text-center">
-        <img src="{{ '/images/vivek-headshot.png' | url }}" alt="vivek shah" class="w-24 h-24 rounded-full object-cover mb-4" style="box-shadow:0 0 30px rgba(112,87,232,.35);">
-        <h3 class="text-white font-bold mb-2">vivek shah</h3>
-        <p class="text-xs text-white/50">lifelong learner</p>
-        <p class="text-xs text-white/50">inspirer</p>
-        <p class="text-xs text-white/50">collaborator</p>
-      </div>
+      {% endfor %}
 
     </div>
   </div>
+
+  {# Coach detail modal #}
+  <dialog id="coach-modal" class="modal">
+    <div class="modal-box max-w-3xl w-full relative" style="background:#0d0d2b;border:1px solid rgba(112,87,232,.35);">
+      <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-3 top-3" style="color:rgba(255,255,255,.6);">✕</button>
+      </form>
+      <div class="flex flex-col items-center mb-8 pt-2">
+        <img id="modal-img" src="" alt="" class="w-28 h-28 rounded-full object-cover mb-4" style="box-shadow:0 0 40px rgba(112,87,232,.5);">
+        <h3 id="modal-name" class="text-2xl font-bold text-white"></h3>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-widest mb-3" style="color:rgba(112,87,232,.9);">My Passions</h4>
+          <p id="modal-passions" class="text-sm leading-relaxed" style="color:rgba(255,255,255,.7);"></p>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-widest mb-3" style="color:rgba(40,218,252,.9);">Career Highlights</h4>
+          <p id="modal-highlights" class="text-sm leading-relaxed" style="color:rgba(255,255,255,.7);"></p>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-widest mb-3" style="color:rgba(71,143,249,.9);">Focus Areas</h4>
+          <p id="modal-focus" class="text-sm leading-relaxed" style="color:rgba(255,255,255,.7);"></p>
+        </div>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
+
+  <script>
+    document.querySelectorAll('.coach-trigger').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var modal = document.getElementById('coach-modal');
+        document.getElementById('modal-img').src = btn.dataset.imageUrl;
+        document.getElementById('modal-img').alt = btn.dataset.name;
+        document.getElementById('modal-name').textContent = btn.dataset.name;
+        document.getElementById('modal-passions').textContent = btn.dataset.passions;
+        document.getElementById('modal-highlights').textContent = btn.dataset.highlights;
+        document.getElementById('modal-focus').textContent = btn.dataset.focus;
+        modal.showModal();
+      });
+      btn.addEventListener('mouseenter', function() {
+        btn.style.boxShadow = '0 0 45px rgba(112,87,232,.7)';
+      });
+      btn.addEventListener('mouseleave', function() {
+        btn.style.boxShadow = '0 0 30px rgba(112,87,232,.35)';
+      });
+    });
+  </script>
+
 </section>
 
 {# ============================================================

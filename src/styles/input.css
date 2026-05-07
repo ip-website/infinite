@@ -34,6 +34,9 @@
 .space-theme > header a {
   color: white !important;
 }
+.space-theme > header .btn-ghost:hover {
+  background: rgba(71, 143, 249, 0.15) !important;
+}
 .space-theme > footer {
   background: #06061a !important;
   border-top: 1px solid rgba(255,255,255,0.07);
