@@ -1,0 +1,4 @@
+/* Index page — video + play button styles */
+#play-btn { transition: background .2s ease, transform .2s ease; }
+#video-facade:hover #play-btn { background: rgba(255,255,255,.22) !important; transform: scale(1.08); }
+#hero-video { transform-origin: top center; }

@@ -2,6 +2,9 @@ module.exports = function(eleventyConfig) {
   // Pass through styles
   eleventyConfig.addPassthroughCopy("src/styles");
 
+  // Pass through page-level assets (css, js, img)
+  eleventyConfig.addPassthroughCopy("src/assets");
+
   // Pass through images
   eleventyConfig.addPassthroughCopy("src/images");
 
