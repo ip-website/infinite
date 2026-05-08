@@ -26,10 +26,18 @@
   background: #06061a;
 }
 .space-theme > header {
-  background: rgba(6, 6, 26, 0.88) !important;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  position: relative;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(6, 6, 26, 0.1) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: none;
   z-index: 50;
+}
+.space-theme > header .navbar {
+  background: transparent !important;
 }
 .space-theme > header a {
   color: white !important;
