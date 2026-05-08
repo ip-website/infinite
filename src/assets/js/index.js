@@ -28,9 +28,26 @@
   var heroText=document.getElementById('hero-text');
   var heroVideo=document.getElementById('hero-video');
   var heroCta=document.getElementById('hero-cta');
-  var unmuteBtn=document.getElementById('unmute-btn');
+  var facadeTitle=document.getElementById('facade-title');
+  var facadeCta=document.getElementById('facade-cta');
   var unlocked=false,effectiveScroll=0,UNLOCK_AT=500;
   var videoStarted=false;
+
+  // Load video only when play button is clicked
+  var playBtn=document.getElementById('play-btn');
+  if(playBtn){
+    playBtn.addEventListener('click',function(){
+      var facade=document.getElementById('video-facade');
+      var iframe=document.getElementById('hero-iframe');
+      if(facade)facade.style.display='none';
+      if(iframe){
+        iframe.src=iframe.dataset.src;
+        iframe.style.display='block';
+        var player=new Vimeo.Player(iframe);
+        player.play().catch(function(){});
+      }
+    });
+  }
 
   // Phase 1: scroll lock
   document.documentElement.style.overflowY='scroll';
@@ -42,7 +59,7 @@
     var vw=window.innerWidth,vh=window.innerHeight;
     var w=Math.min(vw*0.8,1100);
     var h=w*9/16;
-    return {x:(vw-w)/2, y:0.5*vh-0.45*h, w:w, h:h};
+    return {x:(vw-w)/2, y:0.65*vh-0.45*h, w:w, h:h};
   }
 
   function doUnlock(){
@@ -110,6 +127,18 @@
     if(heroText)heroText.style.opacity=textOp;
     if(heroCta)heroCta.style.opacity=textOp;
 
+    // Fade in facade text as hero text disappears
+    var facadeOp=Math.max(0,Math.min(1,(prog-0.2)*4));
+    if(facadeTitle)facadeTitle.style.opacity=facadeOp;
+    if(facadeCta)facadeCta.style.opacity=facadeOp;
+
+    // Show play button only once video is nearly fullscreen
+    if(playBtn){
+      var btnOp=Math.max(0,Math.min(1,(prog-0.85)*10));
+      playBtn.style.opacity=btnOp;
+      playBtn.style.pointerEvents=btnOp>0.5?'auto':'none';
+    }
+
     // Interpolate video from resting rect → full viewport
     if(heroVideo){
       var r=getInitRect();
@@ -125,15 +154,6 @@
       heroVideo.style.boxShadow=ease<0.5?'0 0 60px rgba(71,143,249,'+(0.2*(1-ease*2))+'),0 30px 60px rgba(0,0,0,'+(0.6*(1-ease*2))+')':'none';
     }
 
-    // Start video once nearly fullscreen
-    if(prog>=0.95&&!videoStarted){
-      videoStarted=true;
-      var facade=document.getElementById('video-facade');
-      var iframe=document.getElementById('hero-iframe');
-      if(facade)facade.style.display='none';
-      if(iframe){iframe.src=iframe.dataset.src;iframe.style.display='block';}
-      var controls=document.getElementById('video-controls');if(controls)controls.style.display='flex';
-    }
   }
 
   function animate(){
