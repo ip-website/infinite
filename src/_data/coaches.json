@@ -1,5 +1,13 @@
 [
   {
+    "fullname": "vivek shah",
+    "image": "vivek-headshot.png",
+    "descriptors": ["lifelong learner", "inspirer", "collaborator"],
+    "passions": ["my kiddos Kaya and Ahren, wife Pooja, family / friends in my sphere where we can have the greatest learnings and most magical experiences together! Also all things sports and coaching + learning! Draw me in with a book or movie anytime!"],
+    "highlights": ["studying finance at UT Austin and working as an investor in that arena (D. E. Shaw). Starting a real estate platform that generated 20%+ returns and managed $3B in assets in 9 years. Founder of Infinite Potential."],
+    "focus-areas": ["leading + empowering our team to be the greatest we can be - fully aligned with our vision + values. In that process, ensuring the team grows personally, financially, and professionally while helping humans + organizations reach their Infinite Potential."]
+  },
+  {
     "fullname": "chris balme",
     "image": "cb.png",
     "descriptors": ["designer", "dreamer", "collaborator"],
@@ -40,11 +48,36 @@
     "focus-areas": ["are to offer therapeutic emotional, mental, and spiritual support for team members and clients. I aid in helping others grow and see their own infinite potential by looking inward and seeing through the lens of the best version of themselves."]
   },
   {
-    "fullname": "vivek shah",
-    "image": "vivek-headshot.png",
-    "descriptors": ["lifelong learner", "inspirer", "collaborator"],
-    "passions": ["my kiddos Kaya and Ahren, wife Pooja, family / friends in my sphere where we can have the greatest learnings and most magical experiences together! Also all things sports and coaching + learning! Draw me in with a book or movie anytime!"],
-    "highlights": ["studying finance at UT Austin and working as an investor in that arena (D. E. Shaw). Starting a real estate platform that generated 20%+ returns and managed $3B in assets in 9 years. Founder of Infinite Potential."],
-    "focus-areas": ["leading + empowering our team to be the greatest we can be - fully aligned with our vision + values. In that process, ensuring the team grows personally, financially, and professionally while helping humans + organizations reach their Infinite Potential."]
+    "fullname": "shefali shah",
+    "image": "ss1.png",
+    "descriptors": ["nurturer", "designer", "collaborator"],
+    "passions": ["all things home design. I enjoy arts and crafts. I find creating a form of therapy. I love my family more than anything in world. Family. First. Always."],
+    "highlights": ["include my studies at The Ohio State Univ. and then worked at Ernst & Young in consulting for 5 years. Continued my IT career at Intel for a few more years before taking a 17 year sabbatical from IT to be a SAHM to my 3 kids."],
+    "focus-areas": ["are helping Vivek with whatever he needs to get done. Sometimes I have to calm him down from his crazy ideas too. JK! Mainly I help with all the behind the scenes tasks and am here to help all of YOU in anyway I can."]
+  },
+  {
+    "fullname": "sanjay shenoy",
+    "image": "ss.png",
+    "descriptors": ["helper", "seeker", "collaborator"],
+    "passions": ["my family, travel, coaching soccer, Kalaripayattu (look it up), studying the self"],
+    "highlights": ["include a bachelors and masters in electrical engineering and law school. Legal career spanning a variety of industries helping develop, protect, and commercialize cutting edge technologies."],
+    "focus-areas": ["include advising on risk, providing legal or other support on a variety of matters."]
+  },
+  {
+    "fullname": "puja mehta",
+    "image": "pm.png",
+    "descriptors": ["loyalist", "nurturer", "collaborator"],
+    "passions": ["caring for and nurturing others, and helping people navigate hard moments so they can experience the joy that follows. About my two children, my husband, my family and friends, rich conversations, working out, design, travel and living life fully with intention."],
+    "highlights": ["a bachelor's degree in Psychology and a Master's degree in Nursing. 5 years of sales experience at Pfizer and 12 years as a bedside RN at UCSF. Designed an annual teaching and onboarding program for RNs and served as a preceptor for new nursing staff."],
+    "focus-areas": ["include driving growth and empowering potential through sales, marketing and coaching."]
+  },
+  {
+    "fullname": "pragna shah",
+    "image": "ps.png",
+    "descriptors": ["nurturer", "designer", "collaborator"],
+    "passions": ["cooking for my family and friends. I am learning more about Indian fusion vegetarian food. I also enjoy sewing, knitting, crocheting  and travelling. When I travel internationally, I like to learn more about history and culture of the different countries."],
+    "highlights": ["include graduating from Mumbai University with B.S degree. I helped my husband run his travel agency for many years. The last few years I worked at a real estate company supporting the accounting department."],
+    "focus-areas": ["include administering payroll and managing all things related to accounting. I am here to  support all you."]
   }
+
 ]
