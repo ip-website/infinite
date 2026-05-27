@@ -13,15 +13,7 @@
   }
 
   function drawBg(){
-    var bg=ctx.createRadialGradient(W*.4,H*.35,0,W*.5,H*.5,W*.9);
-    bg.addColorStop(0,'#0d0d2b');bg.addColorStop(.5,'#06061a');bg.addColorStop(1,'#020208');
-    ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-    var n1=ctx.createRadialGradient(W*.65,H*.35,0,W*.65,H*.35,W*.45);
-    n1.addColorStop(0,'rgba(112,87,232,.18)');n1.addColorStop(.6,'rgba(71,143,249,.07)');n1.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=n1;ctx.fillRect(0,0,W,H);
-    var n2=ctx.createRadialGradient(W*.25,H*.65,0,W*.25,H*.65,W*.35);
-    n2.addColorStop(0,'rgba(40,218,252,.1)');n2.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=n2;ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
   }
 
   var subtitle=document.getElementById('hero-subtitle');
@@ -38,8 +30,10 @@
   if(playBtn){
     playBtn.addEventListener('click',function(){
       var facade=document.getElementById('video-facade');
+      var placeholder=document.getElementById('video-placeholder');
       var iframe=document.getElementById('hero-iframe');
       if(facade)facade.style.display='none';
+      if(placeholder)placeholder.style.display='none';
       if(iframe){
         iframe.src=iframe.dataset.src;
         iframe.style.display='block';

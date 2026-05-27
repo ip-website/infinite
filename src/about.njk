@@ -16,7 +16,7 @@ extraJs:
 <section class="relative py-24 lg:py-32 text-center overflow-hidden" style="background:#000;">
   <canvas id="hero-stars" class="absolute inset-0 w-full h-full"></canvas>
   <div class="max-w-3xl mx-auto px-4 relative z-10">
-    <p class="text-xs font-bold uppercase tracking-widest mb-4" style="color:rgba(112,87,232,.8);">Our Story</p>
+    {# <p class="text-xs font-bold uppercase tracking-widest mb-4" style="color:rgba(112,87,232,.8);">Our Story</p> #}
     <h1 class="text-5xl lg:text-6xl font-bold font-[family-name:var(--font-display)] leading-tight mb-6" style="text-shadow:0 0 80px rgba(112,87,232,.35);">
       <span class="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">Purpose driven<br />from the inside out.</span>
     </h1>
@@ -32,8 +32,8 @@ extraJs:
   <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(40,218,252,.08) 0%,transparent 55%);pointer-events:none;"></div>
 
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <p class="text-xs font-bold uppercase tracking-widest mb-4 text-center" style="color:rgba(40,218,252,.8);">The Team</p>
-    <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-12 text-center" style="text-shadow:0 0 40px rgba(40,218,252,.35);">Our Coaches</h2>
+    {# <p class="text-xs font-bold uppercase tracking-widest mb-4 text-center" style="color:rgba(40,218,252,.8);">The Team</p> #}
+    <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-12 text-center" style="text-shadow:0 0 40px rgba(40,218,252,.35);">Who We Are</h2>
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8">
 
       {% for coach in coaches %}
@@ -114,6 +114,81 @@ extraJs:
 </section>
 
 {# ============================================================
+   WHAT WE DO SECTION (programs grid)
+   ============================================================ #}
+<section class="relative py-16 lg:py-24 overflow-hidden" style="background:#09091e;">
+  <canvas class="section-stars absolute inset-0 w-full h-full" style="pointer-events:none;z-index:0;"></canvas>
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 15% 50%,rgba(112,87,232,.18) 0%,transparent 50%),radial-gradient(ellipse at 90% 80%,rgba(40,218,252,.12) 0%,transparent 45%);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-60px;left:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle at 45% 45%,rgba(40,218,252,.14) 0%,rgba(71,143,249,.07) 40%,transparent 65%);filter:blur(30px);pointer-events:none;"></div>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-4" style="text-shadow:0 0 40px rgba(112,87,232,.4);">What We Do</h2>
+    <p class="text-lg text-white/70 mb-12 max-w-2xl leading-relaxed">Every engagement is tailored to produce real, measurable outcomes.</p>
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+
+      <div class="card shadow-md" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(8px);">
+        <div class="card-body">
+          <div class="flex justify-between items-start">
+            <h3 class="card-title text-lg text-white">Executive &amp; life coaching</h3>
+            <span class="text-xs text-white/40 font-medium shrink-0 ml-4">2 hrs/month</span>
+          </div>
+          <hr class="border-white/10 my-3">
+          <p class="text-white/70">Individualized 1:1 coaching for CEOs, executives, and pro coaches ready to grow into their next chapter.</p>
+        </div>
+      </div>
+
+      <div class="card shadow-md" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(8px);">
+        <div class="card-body">
+          <div class="flex justify-between items-start">
+            <h3 class="card-title text-lg text-white">Offsite: connect &amp; align</h3>
+            <span class="text-xs text-white/40 font-medium shrink-0 ml-4">1&ndash;2 day offsite</span>
+          </div>
+          <hr class="border-white/10 my-3">
+          <p class="text-white/70">Immersive 1&ndash;2 day experiences that build the relationships and shared understanding teams need to perform.</p>
+        </div>
+      </div>
+
+      <div class="card shadow-md" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(8px);">
+        <div class="card-body">
+          <div class="flex justify-between items-start">
+            <h3 class="card-title text-lg text-white">Modular custom training</h3>
+            <span class="text-xs text-white/40 font-medium shrink-0 ml-4">2 hrs/month</span>
+          </div>
+          <hr class="border-white/10 my-3">
+          <p class="text-white/70">Development sessions built around your team&rsquo;s priorities &mdash; facilitated, practical, and paired with curated reading.</p>
+        </div>
+      </div>
+
+      <div class="card shadow-md" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(8px);">
+        <div class="card-body">
+          <div class="flex justify-between items-start">
+            <h3 class="card-title text-lg text-white">Culture design</h3>
+            <span class="text-xs text-white/40 font-medium shrink-0 ml-4">20 hours</span>
+          </div>
+          <hr class="border-white/10 my-3">
+          <p class="text-white/70">From defining values to building accountability systems &mdash; a complete approach to culture that your team actually lives.</p>
+        </div>
+      </div>
+
+    </div>
+
+    {# Flagship #}
+    <div class="card shadow-xl" style="background:linear-gradient(135deg,rgba(112,87,232,.75),rgba(71,143,249,.75));border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(12px);box-shadow:0 0 50px rgba(112,87,232,.3),0 25px 50px rgba(0,0,0,.4);">
+      <div class="card-body p-8">
+        <p class="text-xs font-bold uppercase tracking-widest text-white/60 mb-3">Flagship program</p>
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-1">
+          <h3 class="text-2xl font-bold font-[family-name:var(--font-display)] text-white">Team unlock journey</h3>
+          <span class="text-sm text-white/70 shrink-0 sm:text-right">2-day offsite + 4 hrs/month<br>over 6&ndash;12 months</span>
+        </div>
+        <hr class="border-white/20 my-4">
+        <p class="text-white/90 text-lg leading-relaxed max-w-2xl">Combine all four experiences into a comprehensive transformation. Emerge with a remade team &mdash; connected to each other, to your vision and values, and to a shared goal. All rowing in the same direction.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{# ============================================================
    CORE VALUES SECTION
    ============================================================ #}
 <section class="relative py-16 lg:py-24 overflow-hidden" style="background:#09091e;">
@@ -121,7 +196,7 @@ extraJs:
   <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(112,87,232,.15) 0%,transparent 60%);pointer-events:none;"></div>
 
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <p class="text-xs font-bold uppercase tracking-widest mb-4 text-center" style="color:rgba(112,87,232,.8);">What We Stand For</p>
+    {# <p class="text-xs font-bold uppercase tracking-widest mb-4 text-center" style="color:rgba(112,87,232,.8);">What We Stand For</p> #}
     <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-12 text-center" style="text-shadow:0 0 40px rgba(112,87,232,.4);">Our Core Values</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
 
@@ -160,35 +235,6 @@ extraJs:
         </div>
       </div>
 
-    </div>
-  </div>
-</section>
-
-{# ============================================================
-   FOUNDER SECTION
-   ============================================================ #}
-<section class="relative py-16 lg:py-24 overflow-hidden" style="background:#06061a;">
-  <canvas class="section-stars absolute inset-0 w-full h-full" style="pointer-events:none;z-index:0;"></canvas>
-  <div style="position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(112,87,232,.14) 0%,rgba(40,218,252,.05) 50%,transparent 70%);top:50%;left:0%;transform:translate(-20%,-50%);filter:blur(20px);pointer-events:none;"></div>
-  <div style="position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle at 38% 38%,rgba(71,143,249,.20) 0%,rgba(112,87,232,.10) 45%,transparent 65%);filter:blur(35px);pointer-events:none;"></div>
-
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="grid md:grid-cols-2 gap-12 items-center">
-      <div>
-        <img src="{{ '/images/vivek-headshot.png' | url }}" alt="vivek, Founder of Infinite Potential" class="w-full max-w-sm mx-auto lg:mx-0 rounded-2xl" style="box-shadow:0 0 60px rgba(112,87,232,.3),0 25px 50px rgba(0,0,0,.5);">
-      </div>
-      <div>
-        <p class="text-xs font-bold uppercase tracking-widest mb-4" style="color:rgba(40,218,252,.8);">Founder</p>
-        <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-6" style="text-shadow:0 0 40px rgba(40,218,252,.35);">vivek</h2>
-        <p class="text-lg text-white/80 mb-6 leading-relaxed">After 20+ years as an investor &mdash; including co-founding a real estate firm that grew to $2.5B in assets &mdash; vivek founded Infinite Potential in 2023. Not because he reached the top, but because at 42, he finally found his purpose.</p>
-        <p class="text-lg text-white/80 mb-10 leading-relaxed">His dream is simple: to help others&rsquo; dreams come true.</p>
-        <blockquote style="border-left:2px solid #28dafc;padding-left:1.5rem;">
-          <p class="text-xl italic leading-relaxed mb-4" style="color:rgba(255,255,255,.9);text-shadow:0 0 30px rgba(40,218,252,.3);">
-            &ldquo;After 42 years of life, I discovered I am now living my life&rsquo;s purpose through this work.&rdquo;
-          </p>
-          <cite class="text-sm text-white/50 not-italic">&mdash; vivek, Founder</cite>
-        </blockquote>
-      </div>
     </div>
   </div>
 </section>
