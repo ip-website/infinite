@@ -19,11 +19,8 @@
   var subtitle=document.getElementById('hero-subtitle');
   var heroText=document.getElementById('hero-text');
   var heroVideo=document.getElementById('hero-video');
-  var heroCta=document.getElementById('hero-cta');
-  var facadeTitle=document.getElementById('facade-title');
   var facadeCta=document.getElementById('facade-cta');
-  var unlocked=false,effectiveScroll=0,UNLOCK_AT=500;
-  var videoStarted=false;
+  var unlocked=false,effectiveScroll=0,UNLOCK_AT=400;
 
   // Load video only when play button is clicked
   var playBtn=document.getElementById('play-btn');
@@ -48,12 +45,12 @@
   function snapToTop(){if(!unlocked)window.scrollTo(0,0);}
   window.addEventListener('scroll',snapToTop);
 
-  // Compute the video's "resting" position (center of viewport, 80% width, 16:9)
+  // Video resting position (centered below titles)
   function getInitRect(){
     var vw=window.innerWidth,vh=window.innerHeight;
     var w=Math.min(vw*0.8,1100);
     var h=w*9/16;
-    return {x:(vw-w)/2, y:0.65*vh-0.45*h, w:w, h:h};
+    return {x:(vw-w)/2, y:vh*0.95-h/2, w:w, h:h};
   }
 
   function doUnlock(){
@@ -61,12 +58,10 @@
     document.documentElement.style.overflowY='';
     window.removeEventListener('scroll',snapToTop);
     if(subtitle){subtitle.style.opacity='1';subtitle.style.transform='translateY(0)';}
-    if(heroCta)heroCta.style.opacity='1';
 
-    // Switch video from CSS transform positioning to explicit pixel positioning
+    // Switch video to pixel positioning for Phase 2 interpolation
     if(heroVideo){
       var r=getInitRect();
-      heroVideo.style.opacity='1';
       heroVideo.style.transform='none';
       heroVideo.style.left=r.x+'px';
       heroVideo.style.top=r.y+'px';
@@ -93,37 +88,27 @@
   window.addEventListener('touchmove',onTouchMove,{passive:false});
   window.addEventListener('keydown',onKeyDown);
 
-  // Phase 1: animate subtitle + video scale-in from effectiveScroll
+  // Phase 1: only animate subtitle (video is already visible)
   function updatePhase1(s){
     if(subtitle){
-      var p=Math.min(1,Math.max(0,(s-40)/220));
+      var p=Math.min(1,Math.max(0,(s-40)/180));
       subtitle.style.opacity=p;
       subtitle.style.transform='translateY('+(16-p*16)+'px)';
     }
-    if(heroVideo){
-      var p2=Math.min(1,Math.max(0,(s-220)/240));
-      var e=1-Math.pow(1-p2,3);
-      heroVideo.style.opacity=e;
-      heroVideo.style.transform='translate(-50%,-45%) scale('+(0.5+e*0.5)+')';
-    }
   }
 
-  // Phase 2: expand video to fullscreen based on real scroll position
+  // Phase 2: titles scroll off top, video expands to fullscreen
   function updatePhase2(){
     var scrollY=window.scrollY||window.pageYOffset;
     var vh=window.innerHeight,vw=window.innerWidth;
     var prog=Math.min(1,Math.max(0,scrollY/vh));
-    // Ease in-out
     var ease=prog<0.5?2*prog*prog:1-Math.pow(-2*prog+2,2)/2;
 
-    // Fade out title and CTA in first 33% of scroll
-    var textOp=Math.max(0,1-prog*3);
-    if(heroText)heroText.style.opacity=textOp;
-    if(heroCta)heroCta.style.opacity=textOp;
+    // Titles scroll off naturally
+    if(heroText) heroText.style.transform='translateY('+(-scrollY)+'px)';
 
-    // Fade in facade text as hero text disappears
+    // Fade in facade text
     var facadeOp=Math.max(0,Math.min(1,(prog-0.2)*4));
-    if(facadeTitle)facadeTitle.style.opacity=facadeOp;
     if(facadeCta)facadeCta.style.opacity=facadeOp;
 
     // Show play button only once video is nearly fullscreen
@@ -147,7 +132,6 @@
       heroVideo.style.borderRadius=(2*(1-ease))+'rem';
       heroVideo.style.boxShadow=ease<0.5?'0 0 60px rgba(71,143,249,'+(0.2*(1-ease*2))+'),0 30px 60px rgba(0,0,0,'+(0.6*(1-ease*2))+')':'none';
     }
-
   }
 
   function animate(){

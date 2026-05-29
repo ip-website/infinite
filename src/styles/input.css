@@ -30,11 +30,12 @@
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(6, 6, 26, 0.1) !important;
-  backdrop-filter: blur(12px);
+  background: rgba(6, 6, 26, 0.55) !important;
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   border-bottom: none;
   z-index: 50;
+  isolation: isolate;
 }
 .space-theme > header .navbar {
   background: transparent !important;

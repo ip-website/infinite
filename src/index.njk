@@ -11,6 +11,7 @@ extraJs:
   - /assets/js/nebula-parallax.js
   - /assets/js/section-stars.js
   - /assets/js/cta-stars.js
+  - /assets/js/testimonial-carousel.js
 ---
 
 {# Shooting stars container #}
@@ -23,14 +24,14 @@ extraJs:
   <div id="hero-sticky" style="position:sticky;top:0;height:100vh;overflow:hidden;">
     <canvas id="hero-stars" class="absolute inset-0 w-full h-full"></canvas>
 
-    <div id="hero-text" class="relative z-10 text-center max-w-4xl mx-auto px-4" style="padding-top:5rem;">
-      <h1 class="text-5xl lg:text-6xl font-bold font-[family-name:var(--font-display)] mb-2 leading-tight" style="text-shadow:0 0 80px rgba(112,87,232,.35);">
+    <div id="hero-text" class="relative z-10 text-center max-w-4xl mx-auto px-4" style="padding-top:25vh;">
+      <h1 class="text-6xl lg:text-6xl font-bold font-[family-name:var(--font-display)] mb-2 leading-tight" style="text-shadow:0 0 80px rgba(112,87,232,.35);">
         <span class="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">You have infinite potential.</span>
         <span id="hero-subtitle" class="text-white block mt-2" style="opacity:0;transform:translateY(16px);transition:opacity .4s ease,transform .4s ease;">We help you unlock it.</span>
       </h1>
     </div>
 
-    <div id="hero-video" style="position:absolute;left:50%;top:65%;transform:translate(-50%,-45%) scale(0.5);opacity:0;width:80%;max-width:1100px;aspect-ratio:16/9;border-radius:2rem;overflow:hidden;background:#000;box-shadow:0 0 60px rgba(71,143,249,.2),0 30px 60px rgba(0,0,0,.6);z-index:1;">
+    <div id="hero-video" style="position:absolute;left:50%;top:95%;transform:translate(-50%,-50%);width:80%;max-width:1100px;aspect-ratio:16/9;border-radius:2rem;overflow:hidden;background:#000;box-shadow:0 0 60px rgba(71,143,249,.2),0 30px 60px rgba(0,0,0,.6);z-index:1;">
       <img id="video-placeholder" src="{{ '/images/video-placeholder.png' | url }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;">
       <iframe
         id="hero-iframe"
@@ -66,15 +67,47 @@ extraJs:
     <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-6" style="text-shadow:0 0 50px rgba(71,143,249,.5);">Coaching. Culture. Consulting.</h2>
     <p class="text-lg text-white/70 mb-4 max-w-3xl mx-auto leading-relaxed">Most firms choose a lane &mdash; people or performance. We don&rsquo;t. Because real, lasting change only happens when human connection and strategic execution move together.</p>
     <p class="text-lg text-white/70 mb-12 max-w-3xl mx-auto leading-relaxed">We start with the individual, expand to the team, and build outward into culture and business results. It&rsquo;s not a linear process &mdash; it&rsquo;s a continuous loop.</p>
-    <div class="flex justify-center mb-12">
+    {# <div class="flex justify-center mb-12">
       <img src="{{ '/images/IPCCC-transparent.png' | url }}" alt="Coaching, Culture, and Consulting framework" class="w-full max-w-2xl h-auto">
-    </div>
+    </div> #}
     <div class="flex justify-center mt-8">
       <a href="{{ '/programs/' | url }}" class="btn btn-accent btn-lg text-white font-semibold">Curious?</a>
     </div>
   </div>
 </section>
 
+
+{# ============================================================
+   TESTIMONIALS CAROUSEL
+   ============================================================ #}
+<section class="relative py-16 lg:py-24 overflow-hidden" style="background:#09091e;">
+  <canvas class="section-stars absolute inset-0 w-full h-full" style="pointer-events:none;z-index:0;"></canvas>
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(40,218,252,.08) 0%,transparent 55%);pointer-events:none;"></div>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-12 text-center" style="text-shadow:0 0 40px rgba(40,218,252,.35);">What Our Clients Say</h2>
+
+    <div class="overflow-hidden">
+      <div id="testimonial-track" style="display:flex;transition:transform .6s ease;">
+        {% for t in testimonials %}
+        <div class="testimonial-slide" style="flex:0 0 50%;padding:0 1rem;">
+          <div class="card shadow-xl h-full" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(8px);">
+            <div class="card-body">
+              <p class="text-lg text-white/80 italic leading-relaxed mb-4">&ldquo;{{ t.quote }}&rdquo;</p>
+              <div>
+                <p class="text-white font-bold">{{ t.name }}</p>
+                <p class="text-sm text-white/50">{{ t.role }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div id="testimonial-dots" class="flex items-center justify-center mt-8 gap-2"></div>
+  </div>
+</section>
 
 {# ============================================================
    NEWSLETTER SECTION
