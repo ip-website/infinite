@@ -22,21 +22,21 @@
   var facadeCta=document.getElementById('facade-cta');
   var unlocked=false,effectiveScroll=0,UNLOCK_AT=400;
 
-  // Load video only when play button is clicked
+  // Iframe is preloaded; clicking play reveals it and starts playback
   var playBtn=document.getElementById('play-btn');
+  var heroIframe=document.getElementById('hero-iframe');
+  var vimeoPlayer=heroIframe?new Vimeo.Player(heroIframe):null;
   if(playBtn){
     playBtn.addEventListener('click',function(){
       var facade=document.getElementById('video-facade');
       var placeholder=document.getElementById('video-placeholder');
-      var iframe=document.getElementById('hero-iframe');
       if(facade)facade.style.display='none';
       if(placeholder)placeholder.style.display='none';
-      if(iframe){
-        iframe.src=iframe.dataset.src;
-        iframe.style.display='block';
-        var player=new Vimeo.Player(iframe);
-        player.play().catch(function(){});
+      if(heroIframe){
+        heroIframe.style.opacity='1';
+        heroIframe.style.pointerEvents='auto';
       }
+      if(vimeoPlayer)vimeoPlayer.play().catch(function(){});
     });
   }
 
