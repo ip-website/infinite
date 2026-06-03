@@ -118,19 +118,19 @@
       playBtn.style.pointerEvents=btnOp>0.5?'auto':'none';
     }
 
-    // Interpolate video from resting rect → full viewport
+    // Interpolate video from resting rect → full width, keeping 16:9
     if(heroVideo){
       var r=getInitRect();
       var w=r.w+(vw-r.w)*ease;
-      var h=r.h+(vh-r.h)*ease;
+      var h=w*9/16;
       var x=r.x-r.x*ease;
-      var y=r.y-r.y*ease;
+      var yEnd=(vh-vw*9/16)/2; // vertically center at full width
+      var y=r.y+(yEnd-r.y)*ease;
       heroVideo.style.left=x+'px';
       heroVideo.style.top=y+'px';
       heroVideo.style.width=w+'px';
       heroVideo.style.height=h+'px';
       heroVideo.style.borderRadius=(2*(1-ease))+'rem';
-      heroVideo.style.boxShadow=ease<0.5?'0 0 60px rgba(71,143,249,'+(0.2*(1-ease*2))+'),0 30px 60px rgba(0,0,0,'+(0.6*(1-ease*2))+')':'none';
     }
   }
 

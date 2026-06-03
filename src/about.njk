@@ -34,10 +34,10 @@ extraJs:
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     {# <p class="text-xs font-bold uppercase tracking-widest mb-4 text-center" style="color:rgba(40,218,252,.8);">The Team</p> #}
     <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-12 text-center" style="text-shadow:0 0 40px rgba(40,218,252,.35);">Who We Are</h2>
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8">
+    <div class="flex flex-wrap justify-center gap-8">
 
       {% for coach in coaches %}
-      <div class="flex flex-col items-center text-center">
+      <div class="flex flex-col items-center text-center" style="width:8rem;">
         <button
           class="coach-trigger w-24 h-24 rounded-full overflow-hidden mb-4 cursor-pointer border-0 p-0 bg-transparent"
           style="box-shadow:0 0 30px rgba(112,87,232,.35);transition:box-shadow .2s;"
@@ -122,8 +122,8 @@ extraJs:
   <div style="position:absolute;bottom:-60px;left:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle at 45% 45%,rgba(40,218,252,.14) 0%,rgba(71,143,249,.07) 40%,transparent 65%);filter:blur(30px);pointer-events:none;"></div>
 
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-4" style="text-shadow:0 0 40px rgba(112,87,232,.4);">What We Do</h2>
-    <p class="text-lg text-white/70 mb-12 max-w-2xl leading-relaxed">Every engagement is tailored to produce real, measurable outcomes.</p>
+    <h2 class="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-4 text-center" style="text-shadow:0 0 40px rgba(112,87,232,.4);">What We Do</h2>
+    <p class="text-lg text-white/70 mb-12 max-w-2xl mx-auto leading-relaxed text-center">Every engagement is tailored to produce real, measurable outcomes.</p>
     <div class="grid md:grid-cols-2 gap-6 mb-8">
 
       <div class="card shadow-md" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(8px);">
@@ -248,7 +248,7 @@ extraJs:
   <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
     <h2 class="text-4xl font-bold font-[family-name:var(--font-display)] mb-4" style="text-shadow:0 0 40px rgba(255,255,255,.3);">Ready to unlock your potential?</h2>
     <p class="text-lg text-white/80 mb-8">Let&rsquo;s start a conversation.</p>
-    <a href="#" class="btn btn-lg font-bold" style="background:white;color:#7057e8;border:none;box-shadow:0 0 30px rgba(255,255,255,.25);">Connect with us</a>
+    <a href="/connect/" class="btn btn-lg font-bold" style="background:white;color:#7057e8;border:none;box-shadow:0 0 30px rgba(255,255,255,.25);">Connect with us</a>
   </div>
 </section>
 

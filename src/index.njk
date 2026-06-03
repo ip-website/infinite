@@ -31,8 +31,8 @@ extraJs:
       </h1>
     </div>
 
-    <div id="hero-video" style="position:absolute;left:50%;top:95%;transform:translate(-50%,-50%);width:80%;max-width:1100px;aspect-ratio:16/9;border-radius:2rem;overflow:hidden;background:#000;box-shadow:0 0 60px rgba(71,143,249,.2),0 30px 60px rgba(0,0,0,.6);z-index:1;">
-      <img id="video-placeholder" src="{{ '/images/video-placeholder.png' | url }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;">
+    <div id="hero-video" style="position:absolute;left:50%;top:95%;transform:translate(-50%,-50%);width:80%;max-width:1100px;aspect-ratio:16/9;border-radius:2rem;overflow:hidden;z-index:1;">
+      <img id="video-placeholder" src="{{ '/images/video-placeholder.png' | url }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
       <iframe
         id="hero-iframe"
         src="https://player.vimeo.com/video/849443158?controls=1&title=0&byline=0&portrait=0&loop=0&background=0"
@@ -90,12 +90,13 @@ extraJs:
       <div id="testimonial-track" style="display:flex;transition:transform .6s ease;">
         {% for t in testimonials %}
         <div class="testimonial-slide" style="flex:0 0 50%;padding:0 1rem;">
-          <div class="card shadow-xl h-full" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(8px);">
+          <div class="card shadow-xl h-full" style="background:linear-gradient(135deg,rgba(112,87,232,.12),rgba(71,143,249,.08));border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(8px);">
             <div class="card-body">
-              <p class="text-lg text-white/80 italic leading-relaxed mb-4">&ldquo;{{ t.quote }}&rdquo;</p>
+              <span style="font-size:3rem;line-height:1;color:rgba(40,218,252,.5);font-family:Georgia,serif;pointer-events:none;">&ldquo;</span>
+              <p class="text-lg text-white/80 italic leading-relaxed mb-4" style="margin-top:-1rem;">{{ t.quote }}</p>
               <div>
-                <p class="text-white font-bold">{{ t.name }}</p>
-                <p class="text-sm text-white/50">{{ t.role }}</p>
+                <p class="text-lg font-medium" style="color:#28dafc;">{{ t.name }}</p>
+                <p class="text-base font-medium" style="color:rgba(40,218,252,.6);">{{ t.role }}</p>
               </div>
             </div>
           </div>
@@ -109,37 +110,37 @@ extraJs:
 </section>
 
 {# ============================================================
-   NEWSLETTER SECTION
-   ============================================================ #}
-<section class="relative overflow-hidden py-16 lg:py-24" style="background:#07071a;">
-  <canvas class="section-stars absolute inset-0 w-full h-full" style="pointer-events:none;z-index:0;"></canvas>
-  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(112,87,232,.12) 0%,transparent 60%);pointer-events:none;"></div>
-
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-    <h2 class="text-4xl font-bold font-[family-name:var(--font-display)] text-white mb-6" style="text-shadow:0 0 40px rgba(112,87,232,.4);">Join a Community of Leaders<br>Who Look Inward</h2>
-    <p class="text-lg mb-8 text-white/70 max-w-xl mx-auto">Every two weeks we share a piece of wisdom and a reflection prompt. It&rsquo;s a simple practice that compounds over time.<br />For leaders who know that change happens from the inside out.</p>
-    <form action="https://app.kit.com/forms/9252338/subscriptions" class="seva-form formkit-form" method="post" data-sv-form="9252338" data-uid="8630c1aad3" data-format="inline" data-version="5">
-      <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
-      <div data-element="fields" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-        <input class="input bg-white/10 border border-white/20 text-white placeholder:text-white/40 flex-grow" name="email_address" aria-label="Email Address" placeholder="Email Address" required type="email">
-        <button data-element="submit" class="btn btn-accent text-white">
-          <div class="formkit-spinner"><div></div><div></div><div></div></div>
-          <span>Join</span>
-        </button>
-      </div>
-    </form>
-  </div>
-</section>
-
-{# ============================================================
-   CTA SECTION  — T.S. Eliot quote
+   CTA SECTION  — Newsletter + T.S. Eliot quote
    ============================================================ #}
 <section class="relative overflow-hidden text-white py-16 lg:py-24" style="background:linear-gradient(135deg,rgba(112,87,232,.92),rgba(71,143,249,.92));">
   <canvas id="cta-stars" class="absolute inset-0 w-full h-full" style="opacity:.45;pointer-events:none;"></canvas>
   <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(40,218,252,.12) 0%,transparent 60%);pointer-events:none;"></div>
 
   <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-    <blockquote class="mb-10">
+    <h2 class="text-4xl font-bold font-[family-name:var(--font-display)] mb-6" style="text-shadow:0 0 40px rgba(255,255,255,.3);">Sign Up to Receive &ldquo;Flow State&rdquo;</h2>
+    <p class="text-lg mb-8 text-white/80 max-w-xl mx-auto">In a world that never stops moving, Flow State offers a brief pause.<br /><br />Every other Friday, you'll receive a carefully curated story, insight, or reflection designed to help you live with greater presence, purpose, and perspective.</p>
+    <form action="https://app.kit.com/forms/9252338/subscriptions" class="seva-form formkit-form" method="post" data-sv-form="9252338" data-uid="8630c1aad3" data-format="inline" data-version="5">
+      <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
+      <div data-element="fields" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <input class="input bg-white/10 border border-white/20 text-white placeholder:text-white/40 flex-grow" name="email_address" aria-label="Email Address" placeholder="Email Address" required type="email">
+        <button data-element="submit" class="btn btn-accent text-white">
+          <div class="formkit-spinner"><div></div><div></div><div></div></div>
+          <span>Join Flow State</span>
+        </button>
+      </div>
+      <p class="text-xs text-white/40 mt-5">No spam. Just one thoughtful email every other Friday.</p>
+    </form>
+
+  </div>
+</section>
+
+{# ============================================================
+   QUOTE SECTION
+   ============================================================ #}
+<section class="relative overflow-hidden text-white py-16 lg:py-24" style="background:#000;">
+  <canvas class="section-stars absolute inset-0 w-full h-full" style="pointer-events:none;z-index:0;"></canvas>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+    <blockquote>
       <p class="text-2xl italic text-white/90 leading-relaxed">
         &ldquo;We shall not cease from exploration, and the end of all our exploring will be to arrive where we started and know the place for the first time.&rdquo;
       </p>
