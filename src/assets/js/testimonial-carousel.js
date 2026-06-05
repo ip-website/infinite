@@ -55,7 +55,7 @@
 
   function resetTimer(){
     clearInterval(interval);
-    interval=setInterval(next,5000);
+    interval=setInterval(next,8000);
   }
 
   track.style.transform='translateX(0%)';
