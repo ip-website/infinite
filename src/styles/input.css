@@ -55,3 +55,19 @@
 .space-theme > footer p {
   color: rgba(255,255,255,0.35) !important;
 }
+
+/* Core values cards: 5 across at lg, max 3 below */
+.value-card {
+  width: calc(33.333% - 1rem);
+  flex-shrink: 0;
+}
+@media (min-width: 1024px) {
+  .value-card {
+    width: calc(20% - 1.2rem);
+  }
+}
+@media (max-width: 639px) {
+  .value-card {
+    width: 100%;
+  }
+}
