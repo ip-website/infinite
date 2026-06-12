@@ -56,6 +56,16 @@
   color: rgba(255,255,255,0.35) !important;
 }
 
+/* Testimonial slides: full-width on mobile, 50% on md+ */
+.testimonial-slide {
+  flex: 0 0 100%;
+}
+@media (min-width: 768px) {
+  .testimonial-slide {
+    flex: 0 0 50%;
+  }
+}
+
 /* Core values cards: 5 across at lg, max 3 below */
 .value-card {
   width: calc(33.333% - 1rem);

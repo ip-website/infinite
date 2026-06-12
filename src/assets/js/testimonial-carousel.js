@@ -11,6 +11,9 @@
   var current=0;
   var interval;
 
+  // Slide width: 100% on mobile, 50% on md+
+  function slidePercent(){ return window.innerWidth>=768?50:100; }
+
   // Build dot indicators (one per original slide position)
   var dotsContainer=document.getElementById('testimonial-dots');
   if(dotsContainer){
@@ -21,7 +24,7 @@
       dot.addEventListener('click',function(){
         current=parseInt(this.dataset.index);
         track.style.transition='transform .6s ease';
-        track.style.transform='translateX('+(-current*50)+'%)';
+        track.style.transform='translateX('+(-current*slidePercent())+'%)';
         updateDots();
         resetTimer();
       });
@@ -40,7 +43,7 @@
   function next(){
     current++;
     track.style.transition='transform .6s ease';
-    track.style.transform='translateX('+(-current*50)+'%)';
+    track.style.transform='translateX('+(-current*slidePercent())+'%)';
     updateDots();
 
     // If we just slid into the cloned region, snap back after transition
@@ -55,7 +58,7 @@
 
   function resetTimer(){
     clearInterval(interval);
-    interval=setInterval(next,8000);
+    interval=setInterval(next,5000);
   }
 
   track.style.transform='translateX(0%)';

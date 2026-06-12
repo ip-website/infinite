@@ -30,11 +30,11 @@
       <div class="navbar-center">
         <a href="{{ '/' | url }}" class="flex items-center gap-2 text-sm font-[family-name:var(--font-display)]">
           <img src="{{ '/images/IP-LOGOMARK-nav.png' | url }}" alt="{{ site.name }}" class="h-4 w-auto">
-          INFINITE POTENTIAL
+          <span class="hidden sm:inline">INFINITE POTENTIAL</span>
         </a>
       </div>
       <div class="navbar-end">
-        <a href="{{ '/connect/' | url }}" class="btn btn-sm btn-primary text-white font-semibold">Connect With Us</a>
+        <a href="{{ '/connect/' | url }}" class="btn btn-sm btn-primary text-white font-semibold"><span class="sm:hidden">Connect</span><span class="hidden sm:inline">Connect With Us</span></a>
       </div>
     </nav>
   </header>
