@@ -1,4 +1,7 @@
 module.exports = function(eleventyConfig) {
+  // Pass through CNAME for custom domain
+  eleventyConfig.addPassthroughCopy("src/CNAME");
+
   // Pass through styles
   eleventyConfig.addPassthroughCopy("src/styles");
 
