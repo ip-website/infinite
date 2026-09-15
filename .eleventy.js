@@ -9,10 +9,13 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/assets");
 
   // Pass through images
-  eleventyConfig.addPassthroughCopy("src/images");
+  eleventyConfig.addPassthroughCopy("src/assets/images");
 
   // Pass through videos
-  eleventyConfig.addPassthroughCopy("src/videos");
+  eleventyConfig.addPassthroughCopy("src/assets/videos");
+
+  // Pass through audio
+  eleventyConfig.addPassthroughCopy("src/assets/audio");
 
   return {
     pathPrefix: process.env.ELEVENTY_PATH_PREFIX || "/",

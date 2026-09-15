@@ -1,0 +1,299 @@
+---
+layout: base.njk
+title: About | Infinite Potential
+bodyClass: space-theme
+extraJs:
+  - /assets/js/space-bg.js
+  - /assets/js/hero-stars.js
+  - /assets/js/section-stars.js
+  - /assets/js/cta-stars.js
+  - /assets/js/nebula-parallax.js
+---
+
+{# ============================================================
+   PAGE HERO
+   ============================================================ #}
+<section class="relative overflow-hidden py-24 text-center lg:py-32" style="background: #000;">
+  <canvas id="hero-stars" class="absolute inset-0 h-full w-full"></canvas>
+
+  <div class="relative z-10 mx-auto max-w-3xl px-4">
+    {# <p class="mb-4 text-xs font-bold uppercase tracking-widest" style="color: rgba(112,87,232,.8);">Our Story</p> #}
+    <h1
+      class="mb-6 text-5xl font-bold leading-tight lg:text-6xl"
+      style="text-shadow: 0 0 80px rgba(112,87,232,.35);"
+    >
+      <span class="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+        A Gift From<br />
+        Our Team To You
+      </span>
+    </h1>
+    <p class="text-xl leading-relaxed text-white/70">Bonus material for you to explore.</p>
+  </div>
+</section>
+
+{# ============================================================
+   GIFTS SECTION
+   ============================================================ #}
+<section class="relative overflow-hidden py-16 lg:py-24" style="background: #070718;">
+  <canvas class="section-stars absolute inset-0 h-full w-full" style="pointer-events: none; z-index: 0;"></canvas>
+
+  <div
+    style="position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(40,218,252,.08) 0%, transparent 55%); pointer-events: none;"
+  ></div>
+
+  <div class="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+
+    <div class="flex flex-col items-center gap-6 md:flex-row md:gap-8 mb-12">
+
+      <!-- Coach: top on mobile, narrow left column on larger screens -->
+      <div class="shrink-0 md:w-32">
+        {% for coach in coaches %}
+          {% if coach.fullname == "chris balme" %}
+            <div class="flex flex-col items-center text-center">
+              <button
+                class="coach-trigger mb-4 h-24 w-24 cursor-pointer overflow-hidden rounded-full border-0 bg-transparent p-0"
+                style="box-shadow: 0 0 30px rgba(112,87,232,.35); transition: box-shadow .2s;"
+                data-name="{{ coach.fullname | escape }}"
+                data-image-url="{{ ('/images/' + coach.image) | url }}"
+                data-passions="{{ coach.passions[0] | escape }}"
+                data-highlights="{{ coach.highlights[0] | escape }}"
+                data-focus="{{ coach['focus-areas'][0] | escape }}"
+                aria-label="Learn more about {{ coach.fullname | escape }}"
+              >
+                <img
+                  src="{{ ('/images/' + coach.image) | url }}"
+                  alt="{{ coach.fullname }}"
+                  class="h-full w-full object-cover"
+                />
+              </button>
+
+              <h3 class="font-bold text-white">
+                {{ coach.fullname }}
+              </h3>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- Title: below coach on mobile, wide right column on larger screens -->
+      <div class="flex-1">
+        <h2
+          class="text-center text-3xl font-bold text-white md:text-left lg:text-4xl"
+          style="text-shadow: 0 0 40px rgba(40,218,252,.35);"
+        >
+          The Intersections Between Parenting & Leadership
+        </h2>
+      </div>
+
+    </div>
+
+    <p style="text-align: center; color: white; font-size: 1.25rem; line-height: 1.6;">
+      How can your parenting inform your leadership style? And how can your leadership skills enhance your parenting approach? Explore the connections between these two important aspects of your life.
+    </p>
+
+    <video controls playsinline preload="metadata" width="50%" style="display: block; margin: 2rem auto; border-radius: 8px; box-shadow: 0 0 30px rgba(112,87,232,.35);">
+      <source src="/videos/parentleadership.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
+    <div class="flex flex-col items-center gap-6 md:flex-row md:gap-8 mt-8 mb-12">
+
+      <!-- Coach: top on mobile, narrow left column on larger screens -->
+      <div class="shrink-0 md:w-32">
+        {% for coach in coaches %}
+          {% if coach.fullname == "nathalie weister" %}
+            <div class="flex flex-col items-center text-center">
+              <button
+                class="coach-trigger mb-4 h-24 w-24 cursor-pointer overflow-hidden rounded-full border-0 bg-transparent p-0"
+                style="box-shadow: 0 0 30px rgba(112,87,232,.35); transition: box-shadow .2s;"
+                data-name="{{ coach.fullname | escape }}"
+                data-image-url="{{ ('/images/' + coach.image) | url }}"
+                data-passions="{{ coach.passions[0] | escape }}"
+                data-highlights="{{ coach.highlights[0] | escape }}"
+                data-focus="{{ coach['focus-areas'][0] | escape }}"
+                aria-label="Learn more about {{ coach.fullname | escape }}"
+              >
+                <img
+                  src="{{ ('/images/' + coach.image) | url }}"
+                  alt="{{ coach.fullname }}"
+                  class="h-full w-full object-cover"
+                />
+              </button>
+
+              <h3 class="font-bold text-white">
+                {{ coach.fullname }}
+              </h3>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- Title: below coach on mobile, wide right column on larger screens -->
+      <div class="flex-1">
+        <h2
+          class="text-center text-3xl font-bold text-white md:text-left lg:text-4xl"
+          style="text-shadow: 0 0 40px rgba(40,218,252,.35);"
+        >
+          Building the Capacity for Sustainable Change
+        </h2>
+      </div>
+
+    </div>
+
+    <p style="text-align: center; color: white; font-size: 1.25rem; line-height: 1.6;">
+      A workbook to help you further build the capacity for sustainable change in your life and work.
+    </p>
+
+    <div style="text-align: center;">
+      <a href="/images/SustainableChangeWorkbook.pdf" download="SustainableChangeWorkbook.pdf" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; margin: 2rem auto; padding: 0.75rem 1.5rem; background-color: #7057e8; color: white; border-radius: 8px; text-decoration: none; font-weight: bold; box-shadow: 0 0 30px rgba(112,87,232,.35);">
+        <i class="fa-solid fa-file-pdf" style="font-size: 2rem;"></i>
+        <span>Download PDF</span>
+      </a>
+    </div>
+    
+    <div class="flex flex-col items-center gap-6 md:flex-row md:gap-8 mt-8 mb-12">
+
+      <!-- Coach: top on mobile, narrow left column on larger screens -->
+      <div class="shrink-0 md:w-32">
+        {% for coach in coaches %}
+          {% if coach.fullname == "jazzy wong" %}
+            <div class="flex flex-col items-center text-center">
+              <button
+                class="coach-trigger mb-4 h-24 w-24 cursor-pointer overflow-hidden rounded-full border-0 bg-transparent p-0"
+                style="box-shadow: 0 0 30px rgba(112,87,232,.35); transition: box-shadow .2s;"
+                data-name="{{ coach.fullname | escape }}"
+                data-image-url="{{ ('/images/' + coach.image) | url }}"
+                data-passions="{{ coach.passions[0] | escape }}"
+                data-highlights="{{ coach.highlights[0] | escape }}"
+                data-focus="{{ coach['focus-areas'][0] | escape }}"
+                aria-label="Learn more about {{ coach.fullname | escape }}"
+              >
+                <img
+                  src="{{ ('/images/' + coach.image) | url }}"
+                  alt="{{ coach.fullname }}"
+                  class="h-full w-full object-cover"
+                />
+              </button>
+
+              <h3 class="font-bold text-white">
+                {{ coach.fullname }}
+              </h3>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- Title: below coach on mobile, wide right column on larger screens -->
+      <div class="flex-1">
+        <h2
+          class="text-center text-3xl font-bold text-white md:text-left lg:text-4xl"
+          style="text-shadow: 0 0 40px rgba(40,218,252,.35);"
+        >
+          Attacking Recovery
+        </h2>
+      </div>
+
+    </div>
+
+    <p style="text-align: center; color: white; font-size: 1.25rem; line-height: 1.6;">
+      A beautiful guided meditation to lead you to deeper recovery.
+    </p>
+
+    <audio controls preload="metadata" style="display: block; margin: 2rem auto; border-radius: 8px; box-shadow: 0 0 30px rgba(112,87,232,.35);">
+      <source src="/videos/meditation.m4a" type="audio/mp4" />
+      Your browser does not support the audio element.
+    </audio>
+
+  </div>
+
+  {# Coach detail modal #}
+  <dialog id="coach-modal" class="modal">
+    <div class="modal-box relative w-full max-w-3xl" style="background: #0d0d2b; border: 1px solid rgba(112,87,232,.35);">
+      <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-3 top-3" style="color: rgba(255,255,255,.6);">✕</button>
+      </form>
+
+      <div class="mb-8 flex flex-col items-center pt-2">
+        <img
+          id="modal-img"
+          src=""
+          alt=""
+          class="mb-4 h-28 w-28 rounded-full object-cover"
+          style="box-shadow: 0 0 40px rgba(112,87,232,.5);"
+        />
+        <h3 id="modal-name" class="text-2xl font-bold text-white"></h3>
+      </div>
+
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div>
+          <h4 class="mb-3 text-xs font-bold uppercase tracking-widest" style="color: rgba(112,87,232,.9);">My Passions</h4>
+          <p id="modal-passions" class="text-sm leading-relaxed" style="color: rgba(255,255,255,.7);"></p>
+        </div>
+        <div>
+          <h4 class="mb-3 text-xs font-bold uppercase tracking-widest" style="color: rgba(40,218,252,.9);">Career Highlights</h4>
+          <p id="modal-highlights" class="text-sm leading-relaxed" style="color: rgba(255,255,255,.7);"></p>
+        </div>
+        <div>
+          <h4 class="mb-3 text-xs font-bold uppercase tracking-widest" style="color: rgba(71,143,249,.9);">Focus Areas</h4>
+          <p id="modal-focus" class="text-sm leading-relaxed" style="color: rgba(255,255,255,.7);"></p>
+        </div>
+      </div>
+    </div>
+
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
+
+  <script>
+    document.querySelectorAll('.coach-trigger').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var modal = document.getElementById('coach-modal');
+        document.getElementById('modal-img').src = btn.dataset.imageUrl;
+        document.getElementById('modal-img').alt = btn.dataset.name;
+        document.getElementById('modal-name').textContent = btn.dataset.name;
+        document.getElementById('modal-passions').textContent = btn.dataset.passions;
+        document.getElementById('modal-highlights').textContent = btn.dataset.highlights;
+        document.getElementById('modal-focus').textContent = btn.dataset.focus;
+        modal.showModal();
+      });
+
+      btn.addEventListener('mouseenter', function () {
+        btn.style.boxShadow = '0 0 45px rgba(112,87,232,.7)';
+      });
+
+      btn.addEventListener('mouseleave', function () {
+        btn.style.boxShadow = '0 0 30px rgba(112,87,232,.35)';
+      });
+    });
+  </script>
+</section>
+
+{# ============================================================
+   CTA SECTION
+   ============================================================ #}
+<section
+  id="contact"
+  class="relative overflow-hidden py-16 text-white lg:py-24"
+  style="background: linear-gradient(135deg, rgba(112,87,232,.92), rgba(71,143,249,.92));"
+>
+  <canvas id="cta-stars" class="absolute inset-0 h-full w-full" style="opacity: .45; pointer-events: none;"></canvas>
+
+  <div
+    style="position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(40,218,252,.12) 0%, transparent 60%); pointer-events: none;"
+  ></div>
+
+  <div class="relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+    <h2 class="mb-4 text-4xl font-bold" style="text-shadow: 0 0 40px rgba(255,255,255,.3);">
+      Ready to unlock your potential?
+    </h2>
+    <p class="mb-8 text-lg text-white/80">Let&rsquo;s start a conversation.</p>
+    <a
+      href="{{ '/connect/' | url }}"
+      class="btn btn-lg font-bold"
+      style="background: #7057e8; color: white; border: none; box-shadow: 0 0 30px rgba(255,255,255,.25);"
+    >
+      Connect With Us
+    </a>
+  </div>
+</section>
