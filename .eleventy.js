@@ -5,17 +5,23 @@ module.exports = function(eleventyConfig) {
   // Pass through styles
   eleventyConfig.addPassthroughCopy("src/styles");
 
+  eleventyConfig.addPassthroughCopy({
+    "src/assets/images": "images",
+    "src/assets/videos": "videos",
+    "src/assets/audio": "audio"
+  });
+
   // Pass through page-level assets (css, js, img)
   eleventyConfig.addPassthroughCopy("src/assets");
 
-  // Pass through images
-  eleventyConfig.addPassthroughCopy("src/assets/images");
+  // // Pass through images
+  // eleventyConfig.addPassthroughCopy("src/assets/images");
 
-  // Pass through videos
-  eleventyConfig.addPassthroughCopy("src/assets/videos");
+  // // Pass through videos
+  // eleventyConfig.addPassthroughCopy("src/assets/videos");
 
-  // Pass through audio
-  eleventyConfig.addPassthroughCopy("src/assets/audio");
+  // // Pass through audio
+  // eleventyConfig.addPassthroughCopy("src/assets/audio");
 
   return {
     pathPrefix: process.env.ELEVENTY_PATH_PREFIX || "/",
