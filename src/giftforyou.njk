@@ -27,7 +27,6 @@ extraJs:
         Our Team To You
       </span>
     </h1>
-    <p class="text-xl leading-relaxed text-white/70">Bonus material for you to explore.</p>
   </div>
 </section>
 
@@ -43,9 +42,19 @@ extraJs:
 
   <div class="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
 
-    <div class="flex flex-col items-center gap-6 md:flex-row md:gap-8 mb-12">
+    <div class="mb-12 flex flex-col items-center gap-6 md:flex-row md:gap-8">
 
-      <!-- Coach: top on mobile, narrow left column on larger screens -->
+      <!-- Title: top on mobile, wide left column on larger screens -->
+      <div class="flex-1">
+        <h2
+          class="text-center text-3xl font-bold text-white md:text-left lg:text-4xl"
+          style="text-shadow: 0 0 40px rgba(40,218,252,.35);"
+        >
+          The Intersection Between Parenting & Leadership
+        </h2>
+      </div>
+
+      <!-- Coach: below title on mobile, narrow right column on larger screens -->
       <div class="shrink-0 md:w-32">
         {% for coach in coaches %}
           {% if coach.fullname == "chris balme" %}
@@ -75,20 +84,10 @@ extraJs:
         {% endfor %}
       </div>
 
-      <!-- Title: below coach on mobile, wide right column on larger screens -->
-      <div class="flex-1">
-        <h2
-          class="text-center text-3xl font-bold text-white md:text-left lg:text-4xl"
-          style="text-shadow: 0 0 40px rgba(40,218,252,.35);"
-        >
-          The Intersections Between Parenting & Leadership
-        </h2>
-      </div>
-
     </div>
 
     <p style="text-align: center; color: white; font-size: 1.25rem; line-height: 1.6;">
-      How can your parenting inform your leadership style? And how can your leadership skills enhance your parenting approach? Explore the connections between these two important aspects of your life.
+      Explore the connections between these two important aspects of your life.
     </p>
 
     <video controls playsinline preload="metadata" width="50%" style="display: block; margin: 2rem auto; border-radius: 8px; box-shadow: 0 0 30px rgba(112,87,232,.35);">
@@ -96,9 +95,19 @@ extraJs:
       Your browser does not support the video tag.
     </video>
 
-    <div class="flex flex-col items-center gap-6 md:flex-row md:gap-8 mt-8 mb-12">
+    <div class="mt-8 mb-12 flex flex-col items-center gap-6 md:flex-row md:gap-8">
 
-      <!-- Coach: top on mobile, narrow left column on larger screens -->
+      <!-- Title: top on mobile, wide left column on larger screens -->
+      <div class="flex-1">
+        <h2
+          class="text-center text-3xl font-bold text-white md:text-left lg:text-4xl"
+          style="text-shadow: 0 0 40px rgba(40,218,252,.35);"
+        >
+          Building the Capacity for Sustainable Change
+        </h2>
+      </div>
+
+      <!-- Coach: below title on mobile, narrow right column on larger screens -->
       <div class="shrink-0 md:w-32">
         {% for coach in coaches %}
           {% if coach.fullname == "nathalie weister" %}
@@ -128,21 +137,12 @@ extraJs:
         {% endfor %}
       </div>
 
-      <!-- Title: below coach on mobile, wide right column on larger screens -->
-      <div class="flex-1">
-        <h2
-          class="text-center text-3xl font-bold text-white md:text-left lg:text-4xl"
-          style="text-shadow: 0 0 40px rgba(40,218,252,.35);"
-        >
-          Building the Capacity for Sustainable Change
-        </h2>
-      </div>
-
     </div>
 
     <p style="text-align: center; color: white; font-size: 1.25rem; line-height: 1.6;">
-      A workbook to help you further build the capacity for sustainable change in your life and work.
+      An actionable workbook to help you make the change you want in your life or work actually stick.
     </p>
+        <img src="/images/workbook-cover.png" alt="PDF Icon" style="width: 50%;" class="mx-auto" />
 
     <div style="text-align: center;">
       <a href="/images/SustainableChangeWorkbook.pdf" download="SustainableChangeWorkbook.pdf" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; margin: 2rem auto; padding: 0.75rem 1.5rem; background-color: #7057e8; color: white; border-radius: 8px; text-decoration: none; font-weight: bold; box-shadow: 0 0 30px rgba(112,87,232,.35);">
@@ -151,9 +151,19 @@ extraJs:
       </a>
     </div>
     
-    <div class="flex flex-col items-center gap-6 md:flex-row md:gap-8 mt-8 mb-12">
+    <div class="mt-8 mb-12 flex flex-col items-center gap-6 md:flex-row md:gap-8">
 
-      <!-- Coach: top on mobile, narrow left column on larger screens -->
+      <!-- Title: top on mobile, wide left column on larger screens -->
+      <div class="flex-1">
+        <h2
+          class="text-center text-3xl font-bold text-white md:text-left lg:text-4xl"
+          style="text-shadow: 0 0 40px rgba(40,218,252,.35);"
+        >
+          Attacking Recovery
+        </h2>
+      </div>
+
+      <!-- Coach: below title on mobile, narrow right column on larger screens -->
       <div class="shrink-0 md:w-32">
         {% for coach in coaches %}
           {% if coach.fullname == "jazzy wong" %}
@@ -183,20 +193,10 @@ extraJs:
         {% endfor %}
       </div>
 
-      <!-- Title: below coach on mobile, wide right column on larger screens -->
-      <div class="flex-1">
-        <h2
-          class="text-center text-3xl font-bold text-white md:text-left lg:text-4xl"
-          style="text-shadow: 0 0 40px rgba(40,218,252,.35);"
-        >
-          Attacking Recovery
-        </h2>
-      </div>
-
     </div>
 
     <p style="text-align: center; color: white; font-size: 1.25rem; line-height: 1.6;">
-      A beautiful guided meditation to lead you to deeper recovery.
+      A guided meditation to lead you to deeper recovery of your mind, body, and soul.
     </p>
 
     <audio controls preload="metadata" style="display: block; margin: 2rem auto; border-radius: 8px; box-shadow: 0 0 30px rgba(112,87,232,.35);">
